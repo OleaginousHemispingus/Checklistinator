@@ -223,10 +223,13 @@ place_inputted_user = st.selectbox(
    placeholder="Select a place from this menu"
 )
 
-st.write('If you just want all occurances ever, you can just search from 01-01 - 12-31')
+min_check = st.text_input("(Optional) Input a minimum number of occurances needed for percentage reporting", "10" )
 
+st.write('If you just want all occurances ever, you can just search from 01-01 - 12-31')
 start_date = st.text_input("Please input a start date (YYYY-MM-DD) or (MM-DD):", placeholder="Examples: 2017-07-27; 01-01; 09-10")
 end_date = st.text_input("Please input an end date (YYYY-MM-DD) or (MM-DD):", placeholder="Examples: 2025-06-30; 12-31; 03-05" )
+
+
 
 st.write('Press enter/return once you\'ve filled out all four fields!')
 
@@ -563,6 +566,7 @@ if sharpness != len(species):
 		available_columns = [col for col in columns_to_select if col in query.columns]
 		query = query.select(available_columns)
 		filtered.append(query)
+		del(query)
 	st.write(combonotions)
 
 else: 
@@ -648,9 +652,11 @@ result = result.filter(~pl.col("Place").is_in(bad_places))
 st.write_stream(stream_data_ca())
 
 checklist_placeval = df.unique(subset=["Checklist_ID"]).collect()
+del(df)
 place_counts = checklist_placeval["Place"].value_counts()
 
 result_placeval = result["Place"].value_counts()
+del(result)
 
 #st.write(result_placeval.head(15))
 
@@ -691,6 +697,7 @@ with col1:
 	st.write(result_placeval.sort("Count", descending=True).head(30))
 
 final_df = final_df.rename({"count_right": "Count"})
+final_df = final_df.filter(pl.col("Count") > int(min_check))
 
 with col2:
 	st.write_stream(stream_data_1())
