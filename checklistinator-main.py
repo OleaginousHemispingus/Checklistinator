@@ -528,23 +528,31 @@ combonotions = pl.DataFrame()
 #Yeah I know that it should be called a combination, not a permutation
 if sharpness != len(species):
 #	st.write("The following combinations will be used:")
+	report_memory()
 	st.write_stream(stream_data_combos())
+	report_memory()
 	nom = 1
+	report_memory()
 	permutations = []
+	report_memory()
 	diff = len(species) - sharpness
 	for i in range(diff+1):
 		for species_i in combinations(species, sharpness + i):
 			permutations.append(species_i)
 #	st.write(permutations)
+	report_memory()
 	for sp in species: 
 		filtered_1 = [df.filter(pl.col("Common_Name") == sp).collect()]
+		report_memory()
 #		columns_to_select = ["Place", "Checklist_ID", "Observation_Date", "State", "County"]
 	#	available_columns = [col for col in columns_to_select if col in filtered_1.columns]
 		#filtered_1 = filtered_1.select(available_columns)
 #		st.write(filtered1)
 		dictionary[sp] = filtered_1
+		report_memory()
 		del(filtered_1)
 		gc.collect()
+		report_memory()
 	for combo in permutations:
 		n = 1
 #		st.write(combo)
