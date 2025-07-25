@@ -500,7 +500,7 @@ with fs.open(gcs_path, 'rb') as f:
 
 report_memory()
 
-st.write(df.collect().head())
+#st.write(df.collect().head())
 
 dictionary = {}
 common_ids = set()
@@ -528,7 +528,7 @@ if sharpness != len(species):
 #	st.write(permutations)
 	for sp in species: 
 		filtered_1 = [df.filter(pl.col("Common_Name") == sp).select(["Place", "Checklist_ID", "Observation_Date", "State", "County"]).collect()]
-#		st.write(filtered)
+		st.write(filtered1)
 		dictionary[sp] = filtered_1
 	for combo in permutations:
 		n = 1
