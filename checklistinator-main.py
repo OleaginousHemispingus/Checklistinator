@@ -22,13 +22,10 @@ import tracemalloc
 import gc
 
 tracemalloc.start()
-
+#Getting secrets in order to access my google cloud account (we don't want to expose the raw files to anyone)
+#Converting the secrets to a dict
 service_account_json_str = st.secrets["gcs"]["service_account"]
-
-# Parse it into a dict
 credentials_dict = json.loads(service_account_json_str)
-
-# Convert to JSON string again for gcsfs
 credentials_json = json.dumps(credentials_dict)
 
 # Test access
@@ -36,12 +33,13 @@ credentials_json = json.dumps(credentials_dict)
 
 #st.write(credentials_dict)
 
+#being able to get the files
 fs = gcsfs.GCSFileSystem(token=credentials_dict)
 #st.write(fs)
 #st.write(fs.ls("birds-data/checklistinator"))
 st.set_page_config(layout="wide") 
 
-
+#Default number of rows for polars DataFrames is now 55
 pl.Config(tbl_rows=55)
 
 def report_memory():
@@ -49,7 +47,7 @@ def report_memory():
 	mem = process.memory_info().rss / 1024 ** 2  # Convert bytes to MB
 	st.write(f"💾 Current memory usage: {mem:.2f} MB")
 
-
+#Defining text that I want to come out in a strean
 COLLA = """
 Collating...
 """
@@ -136,16 +134,18 @@ def stream_data_cit():
         tt.sleep(0.02)
         
 
-
+#Loading the dictiory with all place names and their codes 'Prince George's, Maryland, United States':'US-MD-033
 with open("data/big_dict.json", "r") as file:
     big_dict_loaded = json.load(file)
-    
+
 possible_places = list(big_dict_loaded.keys())
 
+#Reading a csv for possible species to enter
 possible_species = pl.read_csv('data/Species.csv', separator=',')
 
 area_lists = []
 
+#setting up cosmetics
 st.markdown(
     """
     <style>
@@ -197,10 +197,12 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+#trying to delete variables to save space
 if "df" in globals():
     del df
     gc.collect()
 
+#No native way to center, but here's where writing starts
 col1, col2 = st.columns([2.25,10])
 with col2:
 	st.title("Welcome to the Checklistinator!!!")
@@ -239,8 +241,9 @@ end_date = st.text_input("Please input an end date (YYYY-MM-DD) or (MM-DD):", pl
 
 
 
-st.write('Press enter/return once you\'ve filled out all four fields!')
+st.write('Press enter/return once you\'ve filled out all fields!')
 
+#Make sure it doesn't go too soon
 if not species:
 	st.stop()
 		
@@ -258,6 +261,7 @@ if not end_date:
 #f = str(place_inputted_user).split('-')
 #st.write(f)
 
+#What happens if there's a big area? California, for instance, is spread among like 50 county files. Here is how we deal with that
 def big_area(area_list):
 	st.write("You selected a large area! This might take some time...")
 	all_result_placeval = []
@@ -410,7 +414,7 @@ def filter_by_date_range(df: pl.DataFrame, start_date_str: str, end_date_str: st
 		end_day = int(end_date_str.split("-")[1])
 #		st.write('splitting...')
 		df = df.with_columns([pl.col(date_col).dt.month().alias("month"), pl.col(date_col).dt.day().alias("day")])
-#		st.write('split!')
+#		What if the dates wrap around the year?
 		if (start_month, start_day) <= (end_month, end_day):
 			return df.filter(
 				((pl.col("month") > start_month) | ((pl.col("month") == start_month) & (pl.col("day") >= start_day))) &
@@ -469,7 +473,7 @@ def get_place(place_str: str):
 					for f in matching_files:
 						area_lists.append(f)
 						st.write("appended!")
-					big_area()
+					big_area(area_lists)
 				if place_original in states_w_counties:
 #					st.write("it's in counties!")
 					pattern = re.compile(f"^{re.escape(place_original)}")
@@ -482,6 +486,7 @@ def get_place(place_str: str):
 					big_area(area_lists)
 				st.write("Not a possible locality")
 
+#Loading the place we want
 real_place = big_dict_loaded.get(place_inputted_user)
 
 get_place(place_str = str(real_place))
@@ -501,7 +506,7 @@ gcs_path = os.path.join("birds-data", *filename.split("/"))
 #st.write(gcs_path)
 
 report_memory()
-
+#Opening our db
 with fs.open(gcs_path, 'rb') as f:
 #	data = f.read(1024)
 #	st.write(f"First 1 KB: {len(data)} bytes read")
@@ -525,6 +530,7 @@ report_memory()
 
 combonotions = pl.DataFrame()
 
+#Here's what happens if they want to, like, match 3 out of 6 species (note that it includes 4/6, 5/6, and 6/6)
 #Yeah I know that it should be called a combination, not a permutation
 if sharpness != len(species):
 #	st.write("The following combinations will be used:")
@@ -590,7 +596,7 @@ if sharpness != len(species):
 		del(query)
 		gc.collect()
 	st.write(combonotions)
-
+#this is what happens if it is the same, e.g., 6 out of 6 species
 else: 
 	filtered = []
 	for sp in species:
@@ -629,7 +635,7 @@ st.write('ending')
 report_memory()
 
 
-
+#filtering
 result = filtered[0].filter(pl.col("Checklist_ID").is_in(common_ids)).unique()
 del(filtered)
 del(common_ids)
@@ -743,11 +749,11 @@ gc.collect()
 
 #st.write(top_results_percents)
 top_results_percents = top_results_percents.select(["Place", "Co-occurrence Rate", "count_right"])
-st.write(top_results_percents)
+#st.write(top_results_percents)
 top_cocurrance = placeval_df.sort("Co-occurrence Rate", descending=True).select(["Place", "Co-occurrence Rate", "count_right"])
 top_cocurrance = top_cocurrance.filter(pl.col("count_right") > int(min_check))
 top_cocurrance = top_cocurrance.head(20)
-st.write(top_cocurrance)
+#st.write(top_cocurrance)
 
 st.write('done')
 report_memory()
