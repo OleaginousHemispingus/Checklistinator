@@ -599,6 +599,8 @@ if new_place != place_original:
 		result = result.filter(pl.col("State") == place_original)
 #		st.write("Place_original must be messed up")
 
+result = result.drop("State", "County")
+
 report_memory()
 
 #st.write(result)
