@@ -675,9 +675,10 @@ st.write_stream(stream_data_ca())
 st.write('before placeval')
 report_memory()
 
-checklist_placeval = df.unique(subset=["Checklist_ID"]).collect()
-del(df)
+lazy_df = df.unique(subset=["Checklist_ID"])
+del df
 gc.collect()
+checklist_placeval = lazy_df.collect()
 checklist_placeval = filter_by_date_range(df = checklist_placeval, start_date_str = str(start_date), end_date_str = str(end_date))
 place_counts = checklist_placeval["Place"].value_counts()
 
