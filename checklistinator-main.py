@@ -568,14 +568,20 @@ if sharpness != len(species):
 else: 
 	filtered = []
 	for sp in species:
+		st.write('starting')
+		report_memory()
 		query = (df.filter(pl.col("Common_Name") == sp).collect())
+		report_memory()
 		columns_to_select = ["Place", "Checklist_ID", "Observation_Date", "State", "County"]
+		report_memory()
 		available_columns = [col for col in columns_to_select if col in query.columns]
 		query = query.select(available_columns)
+		report_memory()
 		filtered.append(query)
 	#st.write(filtered)
 	#st.write(f["Checklist_ID"])
 	ids = [set(f["Checklist_ID"].to_list()) for f in filtered]
+	report_memory()
 
 	common_ids = set.intersection(*ids)
 	
@@ -591,15 +597,15 @@ else:
 #st.write(type(filtered))
 #st.write(filtered[0].unique())
 	
-#st.write(common_ids)
+st.write('ending')
 report_memory()
-st.write('here?')
+
 
 
 result = filtered[0].filter(pl.col("Checklist_ID").is_in(common_ids)).unique()
 report_memory()
 
-st.write('or here?')
+#st.write('or here?')
 
 result = filter_by_date_range(df = result, start_date_str = str(start_date), end_date_str = str(end_date))
 
