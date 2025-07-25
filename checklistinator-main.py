@@ -618,6 +618,8 @@ report_memory()
 
 
 result = filtered[0].filter(pl.col("Checklist_ID").is_in(common_ids)).unique()
+del(filtered)
+gc.collect()
 report_memory()
 
 #st.write('or here?')
