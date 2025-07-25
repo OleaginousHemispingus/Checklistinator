@@ -592,14 +592,20 @@ else:
 #st.write(filtered[0].unique())
 	
 #st.write(common_ids)
+report_memory()
+st.write('here?')
+
 
 result = filtered[0].filter(pl.col("Checklist_ID").is_in(common_ids)).unique()
+report_memory()
+
+st.write('or here?')
 
 result = filter_by_date_range(df = result, start_date_str = str(start_date), end_date_str = str(end_date))
 
 report_memory()
 
-st.write('here?')
+#st.write('here?')
 
 new_place = input_file[:-8]
 
