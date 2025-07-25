@@ -6,3 +6,4 @@ numpy
 gcsfs
 google-cloud-storage
 google-auth
+psutil
