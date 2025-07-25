@@ -508,6 +508,8 @@ common_ids_original = set()
 
 st.write_stream(stream_data_c())
 
+report_memory()
+
 df = filter_by_date_range(df = df, start_date_str = str(start_date), end_date_str = str(end_date))
 
 report_memory()
