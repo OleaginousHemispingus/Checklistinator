@@ -684,8 +684,10 @@ top_results_percents = top_results_percents.with_columns((
 #st.write(top_results_percents)
 top_results_percents = top_results_percents.select(["Place", "Co-occurrence Rate", "count_right"])
 #st.write(top_results_percents)
-top_cocurrance = placeval_df.sort("Co-occurrence Rate", descending=True).select(["Place", "Co-occurrence Rate", "count_right"]).head(20)
-st.write(top_cocurrance)
+top_cocurrance = placeval_df.sort("Co-occurrence Rate", descending=True).select(["Place", "Co-occurrence Rate", "count_right"])
+top_cocurrance = placeval_df.filter(pl.col("count_right") > int(min_check))
+top_cocurrance = top_cocurrance.head(20)
+#st.write(top_cocurrance)
 
 final_df = top_results_percents.vstack(top_cocurrance).unique(subset=["Place"])
 
