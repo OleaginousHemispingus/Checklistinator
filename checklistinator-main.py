@@ -19,6 +19,7 @@ from google.oauth2 import service_account
 import gcsfs
 import psutil
 import tracemalloc
+import gc
 
 tracemalloc.start()
 
@@ -477,7 +478,6 @@ def get_place(place_str: str):
 					big_area(area_lists)
 				st.write("Not a possible locality")
 
-
 real_place = big_dict_loaded.get(place_inputted_user)
 
 get_place(place_str = str(real_place))
@@ -540,6 +540,7 @@ if sharpness != len(species):
 #		st.write(filtered1)
 		dictionary[sp] = filtered_1
 		del(filtered_1)
+		gc.collect()
 	for combo in permutations:
 		n = 1
 #		st.write(combo)
@@ -574,6 +575,7 @@ if sharpness != len(species):
 		query = query.select(available_columns)
 		filtered.append(query)
 		del(query)
+		gc.collect()
 	st.write(combonotions)
 
 else: 
@@ -590,6 +592,7 @@ else:
 		report_memory()
 		filtered.append(query)
 		del(query)
+		gc.collect()
 	#st.write(filtered)
 	#st.write(f["Checklist_ID"])
 	ids = [set(f["Checklist_ID"].to_list()) for f in filtered]
@@ -660,10 +663,12 @@ st.write_stream(stream_data_ca())
 
 checklist_placeval = df.unique(subset=["Checklist_ID"]).collect()
 del(df)
+gc.collect()
 place_counts = checklist_placeval["Place"].value_counts()
 
 result_placeval = result["Place"].value_counts()
 del(result)
+gc.collect()
 
 #st.write(result_placeval.head(15))
 
