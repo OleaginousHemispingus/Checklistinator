@@ -532,7 +532,7 @@ if sharpness != len(species):
 	for sp in species: 
 		filtered_1 = [df.filter(pl.col("Common_Name") == sp).collect()]
 		columns_to_select = ["Place", "Checklist_ID", "Observation_Date", "State", "County"]
-		available_columns = [col for col in columns_to_select if col in query.columns]
+		available_columns = [col for col in columns_to_select if col in filtered_1.columns]
 		filtered_1 = filtered_1.select(available_columns)
 #		st.write(filtered1)
 		dictionary[sp] = filtered_1
