@@ -712,3 +712,4 @@ report_memory()
 
 if "df" in st.session_state:
     del st.session_state["df"]
+st.cache_data.clear()
