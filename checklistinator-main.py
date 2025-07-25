@@ -611,7 +611,7 @@ if new_place != place_original:
 		result = result.filter(pl.col("State") == place_original)
 #		st.write("Place_original must be messed up")
 
-result = result.drop("State", "County")
+result = result.select("Place", "Checklist_ID", "Observation_Date")
 
 report_memory()
 
