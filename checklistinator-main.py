@@ -510,22 +510,6 @@ st.write_stream(stream_data_c())
 
 report_memory()
 
-df = filter_by_date_range(df = df, start_date_str = str(start_date), end_date_str = str(end_date)).collect()
-
-report_memory()
-
-new_place = input_file[:-8]
-
-if new_place != place_original:
-	length = place_original.split('-')
-	level = len(length)
-#	st.write(level)
-	if level == 3:
-		df = df.filter(pl.col("County") == place_original).collect()
-	if level == 2:
-		df = df.filter(pl.col("State") == place_original).collect()
-#		st.write("Place_original must be messed up")
-
 #st.write("Co-occurance of all selected:")
 #st.write(common_ids)
 
@@ -598,6 +582,22 @@ else:
 #st.write(common_ids)
 
 result = filtered[0].filter(pl.col("Checklist_ID").is_in(common_ids)).unique()
+
+result = filter_by_date_range(df = result, start_date_str = str(start_date), end_date_str = str(end_date))
+
+report_memory()
+
+new_place = input_file[:-8]
+
+if new_place != place_original:
+	length = place_original.split('-')
+	level = len(length)
+#	st.write(level)
+	if level == 3:
+		result = result.filter(pl.col("County") == place_original)
+	if level == 2:
+		result = result.filter(pl.col("State") == place_original)
+#		st.write("Place_original must be messed up")
 
 report_memory()
 
