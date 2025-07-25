@@ -556,11 +556,11 @@ if sharpness != len(species):
 		else:
 			common_ids = common_ids | common_ids_original
 		nom = nom + 1
-	filtered = [df.filter(pl.col("Common_Name").is_in(species)).select(["Place", "Checklist_ID", "Observation_Date"]).collect()]
+	filtered = [df.filter(pl.col("Common_Name").is_in(species)).select(["Place", "Checklist_ID", "Observation_Date", "State", "County"]).collect()]
 	st.write(combonotions)
 
 else: 
-	filtered = [df.filter(pl.col("Common_Name") == sp).select(["Place", "Checklist_ID", "Observation_Date"]).collect() for sp in species]
+	filtered = [df.filter(pl.col("Common_Name") == sp).select(["Place", "Checklist_ID", "Observation_Date", "State", "County"]).collect() for sp in species]
 	#st.write(filtered)
 	#st.write(f["Checklist_ID"])
 	ids = [set(f["Checklist_ID"].to_list()) for f in filtered]
