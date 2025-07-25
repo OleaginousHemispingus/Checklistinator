@@ -599,6 +599,8 @@ result = filter_by_date_range(df = result, start_date_str = str(start_date), end
 
 report_memory()
 
+st.write('here?')
+
 new_place = input_file[:-8]
 
 if new_place != place_original:
