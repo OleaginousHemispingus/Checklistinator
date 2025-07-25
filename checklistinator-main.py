@@ -681,7 +681,7 @@ del df
 report_memory()
 gc.collect()
 report_memory()
-checklist_placeval = lazy_df.select("Place").collect()
+checklist_placeval = lazy_df.select("Place", "Observation_Date").collect()
 report_memory()
 checklist_placeval = filter_by_date_range(df = checklist_placeval, start_date_str = str(start_date), end_date_str = str(end_date))
 report_memory()
