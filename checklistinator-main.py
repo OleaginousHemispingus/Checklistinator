@@ -632,7 +632,7 @@ result = result.filter(~pl.col("Place").is_in(bad_places))
 
 st.write_stream(stream_data_ca())
 
-checklist_placeval = df.sort("Checklist_ID").unique(subset=["Checklist_ID"]).collect()
+checklist_placeval = df.unique(subset=["Checklist_ID"]).collect()
 place_counts = checklist_placeval["Place"].value_counts()
 
 result_placeval = result["Place"].value_counts()
