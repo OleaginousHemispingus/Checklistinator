@@ -197,6 +197,10 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+if "df" in globals():
+    del df
+    gc.collect()
+
 col1, col2 = st.columns([2.25,10])
 with col2:
 	st.title("Welcome to the Checklistinator!!!")
