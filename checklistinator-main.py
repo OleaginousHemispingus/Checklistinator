@@ -19,10 +19,6 @@ from google.oauth2 import service_account
 import gcsfs
 import psutil
 
-for name in list(globals().keys()):
-    if not name.startswith('__'): # Avoid deleting built-in variables
-        del globals()[name]
-
 service_account_json_str = st.secrets["gcs"]["service_account"]
 
 # Parse it into a dict
