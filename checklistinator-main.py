@@ -578,6 +578,7 @@ else:
 		query = query.select(available_columns)
 		report_memory()
 		filtered.append(query)
+		del(query)
 	#st.write(filtered)
 	#st.write(f["Checklist_ID"])
 	ids = [set(f["Checklist_ID"].to_list()) for f in filtered]
