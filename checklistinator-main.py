@@ -681,6 +681,9 @@ gc.collect()
 checklist_placeval = filter_by_date_range(df = checklist_placeval, start_date_str = str(start_date), end_date_str = str(end_date))
 place_counts = checklist_placeval["Place"].value_counts()
 
+del(checklist_placeval)
+gc.collect()
+
 st.write('after placecounts')
 report_memory()
 
@@ -716,6 +719,9 @@ top_results_percents = place_counts.join(top_results, on="Place", how="right").f
 top_results_percents = top_results_percents.with_columns((
 	(pl.col("count_right") / pl.col("count") * 100).round(2).alias("Co-occurrence Rate")
 ))
+
+del(place_counts)
+gc.collect()
 
 #st.write(top_results_percents)
 top_results_percents = top_results_percents.select(["Place", "Co-occurrence Rate", "count_right"])
