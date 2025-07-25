@@ -786,7 +786,8 @@ final_df = final_df.filter(pl.col("Count") > int(min_check))
 with col2:
 	st.write_stream(stream_data_1())
 	st.write(final_df.sort("Co-occurrence Rate", descending=True).select(["Place", "Co-occurrence Rate", "Count"]))
-	st.caption("\n Note that this always includes the top 10 results from the raw occurance counts to the left.")
+	st.caption("\n Anything with less than." + int(min_check) + "reports at a location are not included.")
+	st.caption("\n This includes the top 10 results from the raw occurance counts to the left (if they have enough reports).")
 
 st.write_stream(stream_data_2())
 st.write_stream(stream_data_cit())
