@@ -500,7 +500,7 @@ with fs.open(gcs_path, 'rb') as f:
 
 report_memory()
 
-#st.write(df.head())
+st.write(df.collect().head())
 
 dictionary = {}
 common_ids = set()
