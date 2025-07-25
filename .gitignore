@@ -1,0 +1,5 @@
+secrets.txt
+.streamlit/secrets.txt
+*.parquet
+*.pkl
+*.csv
