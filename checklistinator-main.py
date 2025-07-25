@@ -676,14 +676,22 @@ st.write('before placeval')
 report_memory()
 
 lazy_df = df.unique(subset=["Checklist_ID"])
+report_memory()
 del df
+report_memory()
 gc.collect()
+report_memory()
 checklist_placeval = lazy_df.collect()
+report_memory()
 checklist_placeval = filter_by_date_range(df = checklist_placeval, start_date_str = str(start_date), end_date_str = str(end_date))
+report_memory()
 place_counts = checklist_placeval["Place"].value_counts()
+report_memory()
 
 del(checklist_placeval)
+report_memory()
 gc.collect()
+report_memory()
 
 st.write('after placecounts')
 report_memory()
