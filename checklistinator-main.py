@@ -112,6 +112,16 @@ def stream_data_1():
 
 url = "https://ebird.org/data/download"
 
+NOTE = f"""
+\n Note that this includes the top 10 results from the raw occurance counts to the left.
+"""
+
+
+def stream_data_note():
+    for word in NOTE.split(" "):
+        yield word + " "
+        tt.sleep(0.02)
+
 CHECK = f"""
 \n Data summaries are derived from eBird Basic Dataset. Raw data are not distributed by this app. For full checklist access, please visit {url}!
 """
@@ -776,6 +786,7 @@ final_df = final_df.filter(pl.col("Count") > int(min_check))
 with col2:
 	st.write_stream(stream_data_1())
 	st.write(final_df.sort("Co-occurrence Rate", descending=True).select(["Place", "Co-occurrence Rate", "Count"]))
+	st.write_stream(stream_data_note())
 
 st.write_stream(stream_data_2())
 st.write_stream(stream_data_cit())
