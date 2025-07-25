@@ -414,7 +414,7 @@ def get_place(place_str: str):
 	for f in possible_file_paths: 
 		posible_file = f.split('/')[2]
 		posible_files.append(posible_file)
-	st.write(posible_files)
+	#st.write(posible_files)
 	place_original = place_str
 	place = place_original
 	if place in posible_files:
