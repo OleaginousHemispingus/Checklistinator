@@ -411,6 +411,7 @@ def get_place(place_str: str):
 	global level
 	global place_original
 	posible_files = [f[:-8] for f in fs.ls("birds-data/checklistinator")]
+	st.write(posible_files)
 	place_original = place_str
 	place = place_original
 	if place in posible_files:
