@@ -495,7 +495,7 @@ report_memory()
 with fs.open(gcs_path, 'rb') as f:
 #	data = f.read(1024)
 #	st.write(f"First 1 KB: {len(data)} bytes read")
-	df = pl.read_parquet(f)
+	df = pl.scan_parquet(f)
 #st.write("loaded")
 
 report_memory()
@@ -510,7 +510,7 @@ st.write_stream(stream_data_c())
 
 report_memory()
 
-df = filter_by_date_range(df = df, start_date_str = str(start_date), end_date_str = str(end_date))
+df = filter_by_date_range(df = df, start_date_str = str(start_date), end_date_str = str(end_date)).collect()
 
 report_memory()
 
@@ -521,9 +521,9 @@ if new_place != place_original:
 	level = len(length)
 #	st.write(level)
 	if level == 3:
-		df = df.filter(pl.col("County") == place_original)
+		df = df.filter(pl.col("County") == place_original).collect()
 	if level == 2:
-		df = df.filter(pl.col("State") == place_original)
+		df = df.filter(pl.col("State") == place_original).collect()
 #		st.write("Place_original must be messed up")
 
 #st.write("Co-occurance of all selected:")
@@ -543,7 +543,7 @@ if sharpness != len(species):
 			permutations.append(species_i)
 #	st.write(permutations)
 	for sp in species: 
-		filtered_1 = [df.filter(pl.col("Common_Name") == sp).select(["Place", "Checklist_ID", "Observation_Date"])]
+		filtered_1 = [df.filter(pl.col("Common_Name") == sp).select(["Place", "Checklist_ID", "Observation_Date"]).collect()]
 #		st.write(filtered)
 		dictionary[sp] = filtered_1
 	for combo in permutations:
@@ -572,11 +572,11 @@ if sharpness != len(species):
 		else:
 			common_ids = common_ids | common_ids_original
 		nom = nom + 1
-	filtered = [df.filter(pl.col("Common_Name").is_in(species)).select(["Place", "Checklist_ID", "Observation_Date"])]
+	filtered = [df.filter(pl.col("Common_Name").is_in(species)).select(["Place", "Checklist_ID", "Observation_Date"]).collect()]
 	st.write(combonotions)
 
 else: 
-	filtered = [df.filter(pl.col("Common_Name") == sp).select(["Place", "Checklist_ID", "Observation_Date"]) for sp in species]
+	filtered = [df.filter(pl.col("Common_Name") == sp).select(["Place", "Checklist_ID", "Observation_Date"]).collect() for sp in species]
 	#st.write(filtered)
 	#st.write(f["Checklist_ID"])
 	ids = [set(f["Checklist_ID"].to_list()) for f in filtered]
@@ -618,7 +618,7 @@ result = result.filter(~pl.col("Place").is_in(bad_places))
 
 st.write_stream(stream_data_ca())
 
-checklist_placeval = df.sort("Checklist_ID").unique(subset=["Checklist_ID"])
+checklist_placeval = df.sort("Checklist_ID").unique(subset=["Checklist_ID"]).collect()
 place_counts = checklist_placeval["Place"].value_counts()
 
 result_placeval = result["Place"].value_counts()
