@@ -534,8 +534,9 @@ if sharpness != len(species):
 		columns_to_select = ["Place", "Checklist_ID", "Observation_Date", "State", "County"]
 		available_columns = [col for col in columns_to_select if col in query.columns]
 		filtered_1 = filtered_1.select(available_columns)
-		st.write(filtered1)
+#		st.write(filtered1)
 		dictionary[sp] = filtered_1
+		del(filtered_1)
 	for combo in permutations:
 		n = 1
 #		st.write(combo)
