@@ -619,6 +619,7 @@ report_memory()
 
 result = filtered[0].filter(pl.col("Checklist_ID").is_in(common_ids)).unique()
 del(filtered)
+del(common_ids)
 gc.collect()
 report_memory()
 
