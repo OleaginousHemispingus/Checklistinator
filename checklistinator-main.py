@@ -709,3 +709,6 @@ st.write_stream(stream_data_2())
 st.write_stream(stream_data_cit())
 
 report_memory()
+
+if "df" in st.session_state:
+    del st.session_state["df"]
