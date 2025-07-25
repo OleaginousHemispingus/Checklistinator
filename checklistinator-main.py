@@ -17,6 +17,7 @@ import google.cloud
 import google.oauth2
 from google.oauth2 import service_account
 import gcsfs
+import psutil
 
 service_account_json_str = st.secrets["gcs"]["service_account"]
 
@@ -38,6 +39,12 @@ st.set_page_config(layout="wide")
 
 
 pl.Config(tbl_rows=55)
+
+def report_memory():
+	process = psutil.Process(os.getpid())
+	mem = process.memory_info().rss / 1024 ** 2  # Convert bytes to MB
+	st.write(f"💾 Current memory usage: {mem:.2f} MB")
+
 
 COLLA = """
 Collating...
@@ -483,12 +490,15 @@ st.write_stream(stream_data_co())
 gcs_path = os.path.join("birds-data", *filename.split("/"))
 #st.write(gcs_path)
 
+report_memory()
+
 with fs.open(gcs_path, 'rb') as f:
 #	data = f.read(1024)
 #	st.write(f"First 1 KB: {len(data)} bytes read")
 	df = pl.read_parquet(f)
 #st.write("loaded")
 
+report_memory()
 
 #st.write(df.head())
 
@@ -499,6 +509,8 @@ common_ids_original = set()
 st.write_stream(stream_data_c())
 
 df = filter_by_date_range(df = df, start_date_str = str(start_date), end_date_str = str(end_date))
+
+report_memory()
 
 new_place = input_file[:-8]
 
@@ -585,6 +597,8 @@ else:
 
 result = filtered[0].filter(pl.col("Checklist_ID").is_in(common_ids)).unique()
 
+report_memory()
+
 #st.write(result)
 
 result_try = result.group_by(["Place", "Observation_Date"]).len()
@@ -653,3 +667,5 @@ with col2:
 
 st.write_stream(stream_data_2())
 st.write_stream(stream_data_cit())
+
+report_memory()
