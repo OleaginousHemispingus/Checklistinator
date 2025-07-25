@@ -18,6 +18,9 @@ import google.oauth2
 from google.oauth2 import service_account
 import gcsfs
 import psutil
+import tracemalloc
+
+tracemalloc.start()
 
 service_account_json_str = st.secrets["gcs"]["service_account"]
 
@@ -717,3 +720,12 @@ report_memory()
 if "df" in st.session_state:
     del st.session_state["df"]
 st.cache_data.clear()
+
+snapshot = tracemalloc.take_snapshot()
+top_stats = snapshot.statistics('lineno')
+
+print("[ Top 10 memory-consuming lines ]")
+for stat in top_stats[:10]:
+	print(stat)
+
+tracemalloc.stop()
