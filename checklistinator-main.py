@@ -454,7 +454,7 @@ def get_place(place_str: str):
 #		st.write(input_file)
 	elif len(place.split('-')) ==1:
 		pattern = re.compile(f"^{re.escape(place_original)}")
-		matching_files = [f for f in os.listdir('checklistinator') if pattern.match(f)]
+		matching_files = [f[:-8] for f in fs.ls("birds-data/checklistinator")]
 		st.write(len(matching_files))
 		for f in matching_files:
 			path = os.path.join('checklistinator', f)
