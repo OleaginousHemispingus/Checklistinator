@@ -527,7 +527,7 @@ if sharpness != len(species):
 			permutations.append(species_i)
 #	st.write(permutations)
 	for sp in species: 
-		filtered_1 = [df.filter(pl.col("Common_Name") == sp).select(["Place", "Checklist_ID", "Observation_Date"]).collect()]
+		filtered_1 = [df.filter(pl.col("Common_Name") == sp).select(["Place", "Checklist_ID", "Observation_Date", "State", "County"]).collect()]
 #		st.write(filtered)
 		dictionary[sp] = filtered_1
 	for combo in permutations:
