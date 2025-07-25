@@ -649,9 +649,10 @@ if new_place != place_original:
 
 result = result.select("Place", "Checklist_ID", "Observation_Date")
 
+st.write('before trytry')
 report_memory()
 
-#st.write(result)
+
 
 result_try = result.group_by(["Place", "Observation_Date"]).len()
 #st.write(result_try)
@@ -663,16 +664,25 @@ bad_places = bad_places_df['Place'].to_list()
 #st.write(bad_places)
 #st.write(tryrty)
 
+st.write('after trytry')
+report_memory()
+
 
 result = result.filter(~pl.col("Place").is_in(bad_places))
 
 st.write_stream(stream_data_ca())
+
+st.write('before placeval')
+report_memory()
 
 checklist_placeval = df.unique(subset=["Checklist_ID"]).collect()
 del(df)
 gc.collect()
 checklist_placeval = filter_by_date_range(df = checklist_placeval, start_date_str = str(start_date), end_date_str = str(end_date))
 place_counts = checklist_placeval["Place"].value_counts()
+
+st.write('after placecounts')
+report_memory()
 
 result_placeval = result["Place"].value_counts()
 del(result)
@@ -682,11 +692,17 @@ gc.collect()
 
 result_placeval = result_placeval.filter(pl.col("count") > 1)
 
+st.write('after resultcounts')
+report_memory()
+
 col1, col2 = st.columns([5,7])
 
 # Compute co-occurrence rate (percentage of checklists at place that include all species)
 placeval_df = place_counts.join(result_placeval, on="Place", how="left").fill_null(0)
 #st.write(placeval_df.head(15))
+
+st.write('starting to calculate percents')
+report_memory()
 
 placeval_df = placeval_df.with_columns((
 	(pl.col("count_right") / pl.col("count") * 100).round(2).alias("Co-occurrence Rate")
@@ -709,7 +725,13 @@ top_cocurrance = top_cocurrance.filter(pl.col("count_right") > int(min_check))
 top_cocurrance = top_cocurrance.head(20)
 st.write(top_cocurrance)
 
+st.write('done')
+report_memory()
+
 final_df = top_results_percents.vstack(top_cocurrance).unique(subset=["Place"])
+
+st.write('stacked')
+report_memory()
 
 result_placeval = result_placeval.rename({"count": "Count"})
 
