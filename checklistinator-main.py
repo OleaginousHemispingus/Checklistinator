@@ -671,6 +671,7 @@ st.write_stream(stream_data_ca())
 checklist_placeval = df.unique(subset=["Checklist_ID"]).collect()
 del(df)
 gc.collect()
+checklist_placeval = filter_by_date_range(df = checklist_placeval, start_date_str = str(start_date), end_date_str = str(end_date))
 place_counts = checklist_placeval["Place"].value_counts()
 
 result_placeval = result["Place"].value_counts()
