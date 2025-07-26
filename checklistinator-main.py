@@ -391,6 +391,17 @@ def big_area(area_list):
 		gc.collect()
 		
 		result = filter_by_date_range(df = result, start_date_str = str(start_date), end_date_str = str(end_date))
+		new_place = input_file[:-8]
+
+		if new_place != place_original:
+			length = place_original.split('-')
+			level = len(length)
+#			st.write(level)
+			if level == 3:
+				result = result.filter(pl.col("County") == place_original)
+			if level == 2:
+				result = result.filter(pl.col("State") == place_original)
+#				st.write("Place_original must be messed up")
 		result = result.select("Place", "Checklist_ID", "Observation_Date")
 		result_try = result.group_by(["Place", "Observation_Date"]).len()
 		#st.write(result_try)
