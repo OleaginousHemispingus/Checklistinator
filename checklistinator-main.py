@@ -284,7 +284,9 @@ def big_area(area_list):
 	for checklist in area_list:
 		#st.write(checklist)
 		checklist_split = checklist.split("/")
-		checklist_name = f"{checklist}"
+		nocheck = checklist.split[1]
+		noparq = nocheck[:-8]
+		checklist_name = f"{noparq}"
 		st.write(f"Collecting: {checklist_name}")
 		combonotions = pl.DataFrame()
 		dictionary = {}
@@ -554,7 +556,7 @@ def get_place(place_str: str):
 #		st.write(input_file)
 	elif len(place.split('-')) ==1:
 		pattern = re.compile(f"^{re.escape(place_original)}")
-		#st.write(pattern)
+		##st.write(pattern)
 		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
 		#st.write(len(matching_files))
 		for f in matching_files:
@@ -565,7 +567,7 @@ def get_place(place_str: str):
 		big_area(area_lists)
 	elif place in split_places:
 		pattern = re.compile(f"^{re.escape(place_original)}")
-		st.write(pattern)
+		#st.write(pattern)
 		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
 		#st.write(len(matching_files))
 		for f in matching_files:
@@ -578,7 +580,7 @@ def get_place(place_str: str):
 		st.write('3')
 		patternplace = place_original[:-3]
 		pattern = re.compile(f"^{re.escape(patternplace)}")
-		st.write(pattern)
+		#st.write(pattern)
 		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
 		#st.write(len(matching_files))
 		for f in matching_files:
@@ -615,7 +617,7 @@ def get_place(place_str: str):
 		st.write('2')
 		patternplace = place_original[:-2]
 		pattern = re.compile(f"^{re.escape(patternplace)}")
-		#st.write(pattern)
+		##st.write(pattern)
 		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
 		#st.write(len(matching_files))
 		for f in matching_files:
@@ -626,7 +628,7 @@ def get_place(place_str: str):
 		big_area(area_lists)
 	elif len(place.split('-')) ==3:
 		pattern = re.compile(f"^{re.escape(place_original)}")
-		#st.write(pattern)
+		##st.write(pattern)
 		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
 		#st.write(len(matching_files))
 		for f in matching_files:
@@ -665,7 +667,7 @@ def get_place(place_str: str):
 				if str(place_original) in states_w_counties:
 					#st.write("it's in counties!")
 					pattern = re.compile(f"^{re.escape(place_original)}")
-					#st.write(pattern)
+					##st.write(pattern)
 					matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
 					#st.write(len(matching_files))
 					for f in matching_files:
