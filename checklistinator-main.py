@@ -360,7 +360,7 @@ def big_area(area_list):
 		else: 
 			filtered = []
 			for sp in species:
-				st.write('starting')
+	#			st.write('starting')
 				
 				query = (df.filter(pl.col("Common_Name") == sp).collect())
 				
@@ -480,14 +480,22 @@ def filter_by_date_range(df: pl.DataFrame, start_date_str: str, end_date_str: st
 #	st.write("Converted to dates")
 	if has_year:
 #		st.write("Years!")
-		start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
-		end_date = datetime.strptime(end_date_str, "%Y-%m-%d").date()
-		return df.filter((pl.col(date_col) >= start_date) & (pl.col(date_col) <= end_date))
+		try:
+			start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
+			end_date = datetime.strptime(end_date_str, "%Y-%m-%d").date()
+			return df.filter((pl.col(date_col) >= start_date) & (pl.col(date_col) <= end_date))
+		except:
+			print("please enter a valid date")
+			st.stop()
 	else:
-		start_month = int(start_date_str.split("-")[0])
-		start_day = int(start_date_str.split("-")[1])
-		end_month = int(end_date_str.split("-")[0])
-		end_day = int(end_date_str.split("-")[1])
+		try:
+			start_month = int(start_date_str.split("-")[0])
+			start_day = int(start_date_str.split("-")[1])
+			end_month = int(end_date_str.split("-")[0])
+			end_day = int(end_date_str.split("-")[1])
+		except:
+			print("please enter a valid date")
+			st.stop()
 #		st.write('splitting...')
 		df = df.with_columns([pl.col(date_col).dt.month().alias("month"), pl.col(date_col).dt.day().alias("day")])
 #		What if the dates wrap around the year?
@@ -682,7 +690,7 @@ if sharpness != len(species):
 else: 
 	filtered = []
 	for sp in species:
-		st.write('starting')
+		#st.write('starting')
 		
 		query = (df.filter(pl.col("Common_Name") == sp).collect())
 		
@@ -725,6 +733,7 @@ gc.collect()
 
 
 #st.write('or here?')
+
 
 result = filter_by_date_range(df = result, start_date_str = str(start_date), end_date_str = str(end_date))
 
