@@ -559,7 +559,7 @@ if sharpness != len(species):
 	report_memory()
 	for sp in species: 
 		filtered_1 = df.filter(pl.col("Common_Name") == sp).select(["Checklist_ID"]).collect()
-		filtered_1_list = filtered_1[Checklist_ID].to_list()
+		filtered_1_list = filtered_1["Checklist_ID"].to_list()
 		st.write(type(filtered_1))
 		report_memory()
 #		columns_to_select = ["Checklist_ID"]
