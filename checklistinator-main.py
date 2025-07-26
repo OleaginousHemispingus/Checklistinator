@@ -389,12 +389,15 @@ def big_area(area_list):
 		gc.collect()
 		
 		result = filter_by_date_range(df = result, start_date_str = str(start_date), end_date_str = str(end_date))
+		place_original = big_dict_loaded.get(place_inputted_user)
 		spl1 = checklist_split[1]
 		nounder = spl1.split('_')
 		noper = nounder[0].split('.')
-		new_place = noper[0]
-		#components = nounder.split('-')
-		#if len(components) == 1:
+		components = noper.split('-')
+		if len(components) > len(components_original):
+			new_place = place_original
+		else:
+			new_place = new_place = noper[0]
 			
 		#if len(spl1) != 1:
 		#	new_place_original = spl1.split('_')[0]
@@ -402,7 +405,6 @@ def big_area(area_list):
 		#	new_place = f"{new_place_list[0]}-{new_place_list[1]}"
 		#else:
 		#	new_place = spl1.split('_')[0]
-		place_original = big_dict_loaded.get(place_inputted_user)
 		st.write(checklist_split)
 		st.write(new_place)
 		st.write(place_original)
