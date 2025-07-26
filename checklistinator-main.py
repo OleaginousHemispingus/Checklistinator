@@ -393,7 +393,7 @@ def big_area(area_list):
 		spl1 = checklist_split[1]
 		nounder = spl1.split('_')
 		noper = nounder[0].split('.')
-		components = noper.split('-')
+		components = noper[0].split('-')
 		if len(components) > len(components_original):
 			new_place = place_original
 		else:
