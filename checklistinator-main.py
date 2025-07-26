@@ -565,6 +565,7 @@ def get_place(place_str: str):
 		for f in matching_files:
 			#st.write(f)
 			path = f[11:]
+			st.write(path)
 			area_lists.append(path)
 #			st.write("appended!")
 		big_area(area_lists)
