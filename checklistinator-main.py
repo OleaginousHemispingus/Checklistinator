@@ -432,8 +432,8 @@ def big_area(area_list):
 		del(result_placeval)
 		gc.collect()
 	try: 
-	st.write_stream(stream_data_combos())
-	st.write(combonotions)
+		st.write_stream(stream_data_combos())
+		st.write(combonotions)
 	except:
 		pass
 #	st.write_stream(stream_data_ca())
