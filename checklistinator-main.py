@@ -517,7 +517,8 @@ def filter_by_date_range(df: pl.DataFrame, start_date_str: str, end_date_str: st
 posible_files = []
 def get_place(place_str: str):
 	countries_w_states = ["US", "CA", "IN", "AU", "GB", "ES", "TW", "CO", "BR", "MX", "CR", "AR", "PE", "PT", "CL", "DE", "EC", "NZ", "PA"]
-	states_w_counties = ["US-CA", "US-AZ", "US-FL", "US-CO", "US-WI", "US-IL", "US-MD", "US-NC", "US-OR", "US-MA", "US-MI", "US-NJ", "US-OH", "US-PA", "US-TX", "US-VA", "US-WA", "CA-QC", "CA-BC", "CA-ON", "GB-ENG", "US-NY"]
+	states_w_counties = ["US-CA", "US-AZ", "US-FL", "US-CO", "US-WI", "US-IL", "US-GA", "US-MN", "US-MD", "US-NC", "US-OR", "US-MA", "US-MI", "US-NJ", "US-OH", "US-PA", "US-TX", "US-VA", "US-WA", "CA-QC", "CA-BC", "CA-ON", "GB-ENG", "US-NY"]
+	split_places = ["AU-QLD"]
 	global input_file
 	global level
 	global place_original
@@ -544,6 +545,17 @@ def get_place(place_str: str):
 #			st.write("appended!")
 		big_area(area_lists)
 	elif len(place.split('-')) ==3:
+		pattern = re.compile(f"^{re.escape(place_original)}")
+		st.write(pattern)
+		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
+		st.write(len(matching_files))
+		for f in matching_files:
+			st.write(f)
+			path = f[11:]
+			area_lists.append(path)
+#			st.write("appended!")
+		big_area(area_lists)
+	elif place in split_places:
 		pattern = re.compile(f"^{re.escape(place_original)}")
 		st.write(pattern)
 		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
