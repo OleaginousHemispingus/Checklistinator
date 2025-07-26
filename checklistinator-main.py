@@ -532,7 +532,7 @@ posible_files = []
 def get_place(place_str: str):
 	countries_w_states = ["US", "CA", "IN", "AU", "GB", "ES", "TW", "CO", "BR", "MX", "CR", "AR", "PE", "PT", "CL", "DE", "EC", "NZ", "PA"]
 	states_w_counties = ["US-CA", "US-AZ", "US-FL", "US-CO", "US-WI", "US-IL", "US-GA", "US-MN", "US-MD", "US-NC", "US-OR", "US-MA", "US-MI", "US-NJ", "US-OH", "US-PA", "US-TX", "US-VA", "US-WA", "CA-QC", "CA-BC", "CA-ON", "GB-ENG", "US-NY"]
-	split_places = ["AU-QLD"]
+	split_places = ["AU-QLD", "AU-VIC", "AU-NSW", "BR-SP", "IN-KA", "IN-KL", "IN-TN", "US-IN", "US-CT", "US-ME"]
 	global input_file
 	global level
 	global place_original
