@@ -282,7 +282,7 @@ def big_area(area_list):
 	all_result_placeval = []
 	all_place_counts = []
 	for checklist in area_list:
-		st.write(checklist)
+		#st.write(checklist)
 		checklist_split = checklist.split("/")
 		checklist_name = f"{checklist}"
 		st.write(f"Collecting: {checklist_name}")
@@ -398,9 +398,9 @@ def big_area(area_list):
 		else:
 			new_place = spl1[:-12]
 		place_original = big_dict_loaded.get(place_inputted_user)
-		st.write(checklist_split)
-		st.write(new_place)
-		st.write(place_original)
+		#st.write(checklist_split)
+		#st.write(new_place)
+		#st.write(place_original)
 		if new_place != place_original:
 			length = place_original.split('-')
 			level = len(length)
@@ -554,11 +554,11 @@ def get_place(place_str: str):
 #		st.write(input_file)
 	elif len(place.split('-')) ==1:
 		pattern = re.compile(f"^{re.escape(place_original)}")
-		st.write(pattern)
+		#st.write(pattern)
 		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
 		st.write(len(matching_files))
 		for f in matching_files:
-			st.write(f)
+			#st.write(f)
 			path = f[11:]
 			area_lists.append(path)
 #			st.write("appended!")
@@ -651,12 +651,12 @@ def get_place(place_str: str):
 				input_file = f"{place}.parquet"
 #				st.write(input_file)
 			else:
-				st.write("else!")
+				#st.write("else!")
 				if str(place_original) in countries_w_states:
 					st.write("it's in states!")
 					pattern = re.compile(f"^{re.escape(place_original)}")
 					matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
-					st.write(len(matching_files))
+					#st.write(len(matching_files))
 					for f in matching_files:
 						path = f[11:]
 						area_lists.append(path)
