@@ -566,6 +566,7 @@ if sharpness != len(species):
 		#filtered_1 = filtered_1.select(available_columns)
 #		st.write(filtered1)
 		dictionary[sp] = filtered_1
+		st.write(filtered_1)
 		report_memory()
 		del(filtered_1)
 		gc.collect()
@@ -786,7 +787,7 @@ final_df = final_df.filter(pl.col("Count") > int(min_check))
 with col2:
 	st.write_stream(stream_data_1())
 	st.write(final_df.sort("Co-occurrence Rate", descending=True).select(["Place", "Co-occurrence Rate", "Count"]))
-	st.caption("\n Anything with less than." + str(min_check) + "reports at a location are not included.")
+	st.caption("\n Anything with less than " + str(min_check) + " reports at a location are not included.")
 	st.caption("\n This includes the top 10 results from the raw occurance counts to the left (if they have enough reports).")
 
 st.write_stream(stream_data_2())
