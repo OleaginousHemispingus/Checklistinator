@@ -354,7 +354,7 @@ def big_area(area_list):
 				filtered.append(query)
 				del(query)
 				gc.collect()
-			if nom == len(pemutations):
+			if nom == len(permutations):
 				st.write(combonotions)
 		#this is what happens if it is the same, e.g., 6 out of 6 species
 		else: 
