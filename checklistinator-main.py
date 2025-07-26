@@ -558,17 +558,21 @@ if sharpness != len(species):
 #	st.write(permutations)
 	report_memory()
 	for sp in species: 
-		filtered_1 = [df.filter(pl.col("Common_Name") == sp).collect()]
-		st.write(type(filtered_1))
-		report_memory()
 		columns_to_select = ["Checklist_ID"]
 		available_columns = [col for col in columns_to_select if col in filtered_1.columns]
-		filtered_1 = filtered_1.select(available_columns)
+		filtered_1 = df.filter(pl.col("Common_Name") == sp).select(available_columns).collect()
+		filtered_1_list = filtered_1.to_list()
+		st.write(type(filtered_1))
+		report_memory()
+#		columns_to_select = ["Checklist_ID"]
+	#	available_columns = [col for col in columns_to_select if col in filtered_1.columns]
+		#filtered_1 = filtered_1.select(available_columns)
 #		st.write(filtered1)
-		dictionary[sp] = filtered_1
-		st.write(filtered_1)
+		dictionary[sp] = filtered_1_list
+		st.write(filtered_1_list)
 		report_memory()
 		del(filtered_1)
+		del(filtered_1_list)
 		gc.collect()
 		report_memory()
 	for combo in permutations:
