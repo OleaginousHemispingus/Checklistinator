@@ -278,14 +278,14 @@ def big_area(area_list):
 	all_place_counts = []
 	for checklist in area_list:
 		st.write(checklist)
-		checklist_v1 = checklist.split(".")[0]
-		checklist_name = checklist_v1.split("/")[1]
+		checklist_split = checklist.split("/")
+		checklist_name = f"{{checklist_split[3]}/{checklist_split[4]}
 		st.write(f"Collecting: {checklist_name}")
 		combonotions = pl.DataFrame()
 		dictionary = {}
 		common_ids = set()
 		common_ids_original = set()
-		gcs_path = os.path.join("birds-data", checklist)
+		gcs_path = os.path.join("birds-data", checklist_name)
 		st.write(gcs_path)
 		with fs.open(gcs_path, 'rb') as f:
 			df = pl.read_parquet(f)
