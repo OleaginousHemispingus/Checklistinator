@@ -535,12 +535,11 @@ def get_place(place_str: str):
 	elif len(place.split('-')) ==1:
 		pattern = re.compile(f"^{re.escape(place_original)}")
 		st.write(pattern)
-		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(f)]
+		matching_files = [f for f in fs.ls("checklistinator") if pattern.match(f)]
 		st.write(len(matching_files))
 		for f in matching_files:
 			#st.write(f)
-			input_file = f"{f}.parquet"
-			path = os.path.join('checklistinator', input_file)
+			path = os.path.join('checklistinator', f)
 			area_lists.append(path)
 #			st.write("appended!")
 		big_area(area_lists)
