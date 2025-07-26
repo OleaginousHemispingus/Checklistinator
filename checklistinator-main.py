@@ -526,7 +526,7 @@ def get_place(place_str: str):
 		#st.write(f)
 		posible_file = f.split('/')[2]
 		posible_files.append(posible_file)
-	st.write(posible_files)
+	#st.write(posible_files)
 	place_original = place_str
 	place = place_original
 	if place in posible_files:
@@ -539,7 +539,8 @@ def get_place(place_str: str):
 		st.write(len(matching_files))
 		for f in matching_files:
 			#st.write(f)
-			path = os.path.join('checklistinator', f)
+			input_file = f"{f}.parquet"
+			path = os.path.join('checklistinator', input_file)
 			area_lists.append(path)
 #			st.write("appended!")
 		big_area(area_lists)
