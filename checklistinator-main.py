@@ -393,7 +393,7 @@ def big_area(area_list):
 		spl1 = checklist_split[1]
 		if len(spl1.split('_')) != 1:
 			new_place_original = spl1.split('_')[0]
-			new_place_list = new_place_split('-')
+			new_place_list = new_place_original.split('-')
 			new_place = f"{new_place_list[0]}-{new_place_list[1]}"
 		else:
 			new_place = spl1[:-12]
