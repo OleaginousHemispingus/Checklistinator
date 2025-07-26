@@ -516,13 +516,14 @@ def filter_by_date_range(df: pl.DataFrame, start_date_str: str, end_date_str: st
 			)
 posible_files = []
 def get_place(place_str: str):
-	countries_w_states = ["US", "CA", "IN", "AU", "GB", "ES", "TW", "CO", "BR", "MX", "CR", "AR"]
+	countries_w_states = ["US", "CA", "IN", "AU", "GB", "ES", "TW", "CO", "BR", "MX", "CR", "AR", "PE", "PT", "CL", "DE", "EC", "NZ", "PA"]
 	states_w_counties = ["US-CA", "US-AZ", "US-FL", "US-CO", "US-WI", "US-IL", "US-MD", "US-NC", "US-OR", "US-MA", "US-MI", "US-NJ", "US-OH", "US-PA", "US-TX", "US-VA", "US-WA", "CA-QC", "CA-BC", "CA-ON", "GB-ENG", "US-NY"]
 	global input_file
 	global level
 	global place_original
 	possible_file_paths = [f[:-8] for f in fs.ls("birds-data/checklistinator")]
 	for f in possible_file_paths: 
+		print(posible_file)
 		posible_file = f.split('/')[2]
 		posible_files.append(posible_file)
 	#st.write(posible_files)
