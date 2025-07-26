@@ -583,17 +583,13 @@ if sharpness != len(species):
 #			st.write(specc)
 			filtered_specc = dictionary[specc]
 			st.write(filtered_specc)
-			for f in filtered_specc:
-				#st.write(f["Checklist_ID"])
-			#	ids_original = set(f)
-				#st.write(ids_original)
-				if n == 1:
-					common_ids_original = f
-				else:
-					common_ids_original = common_ids_original & f
-				n = n + 1
-#				st.write(common_ids_original)
-#				st.write(type(common_ids_original))
+			if n == 1:
+				common_ids_original = filtered_specc
+			else:
+				common_ids_original = common_ids_original & filtered_specc
+			n = n + 1
+#			st.write(common_ids_original)
+#			st.write(type(common_ids_original))
 		if nom == 1:
 			common_ids = common_ids_original
 		else:
