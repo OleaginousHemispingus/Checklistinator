@@ -277,6 +277,7 @@ def big_area(area_list):
 	all_result_placeval = []
 	all_place_counts = []
 	for checklist in area_list:
+		st.write(checklist)
 		checklist_v1 = checklist.split(".")[0]
 		checklist_name = checklist_v1.split("/")[1]
 		st.write(f"Collecting: {checklist_name}")
