@@ -523,7 +523,7 @@ def get_place(place_str: str):
 	global place_original
 	possible_file_paths = [f[:-8] for f in fs.ls("birds-data/checklistinator")]
 	for f in possible_file_paths: 
-		st.write(f)
+		#st.write(f)
 		posible_file = f.split('/')[2]
 		posible_files.append(posible_file)
 	#st.write(posible_files)
@@ -534,10 +534,11 @@ def get_place(place_str: str):
 #		st.write(input_file)
 	elif len(place.split('-')) ==1:
 		pattern = re.compile(f"^{re.escape(place_original)}")
+		st.write(pattern)
 		matching_files = [f[:-8] for f in fs.ls("birds-data/checklistinator")]
 		st.write(len(matching_files))
 		for f in matching_files:
-			st.write(f)
+			#st.write(f)
 			path = os.path.join('checklistinator', f)
 			area_lists.append(path)
 #			st.write("appended!")
