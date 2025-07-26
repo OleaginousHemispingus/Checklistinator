@@ -439,7 +439,7 @@ def big_area(area_list):
 	top_results_percents = top_results_percents.select(["Place", "Co-occurrence Rate", "count_right"])
 #	st.write(top_results_percents)
 	top_cocurrance = placeval_df.sort("Co-occurrence Rate", descending=True).select(["Place", "Co-occurrence Rate", "count_right"])
-	top_cocurrance = top_cocurrance.filter(pl.col("count_right") > int(min_check))
+	top_cocurrance = top_cocurrance.filter(pl.col("count_right") >= int(min_check))
 	top_cocurrance = top_cocurrance.head(20)
 #	st.write(top_cocurrance)
 	#st.write(top_cocurrance)
@@ -451,7 +451,7 @@ def big_area(area_list):
 		st.write_stream(stream_data())
 		st.write(total_result_placeval.sort("Count", descending=True).head(30))
 	final_df = final_df.rename({"count_right": "Count"})
-	final_df = final_df.filter(pl.col("Count") > int(min_check))
+	final_df = final_df.filter(pl.col("Count") >= int(min_check))
 	with col2:
 		st.write_stream(stream_data_1())
 		st.write(final_df.sort("Co-occurrence Rate", descending=True).select(["Place", "Co-occurrence Rate", "Count"]))
@@ -847,7 +847,7 @@ gc.collect()
 top_results_percents = top_results_percents.select(["Place", "Co-occurrence Rate", "count_right"])
 #st.write(top_results_percents)
 top_cocurrance = placeval_df.sort("Co-occurrence Rate", descending=True).select(["Place", "Co-occurrence Rate", "count_right"])
-top_cocurrance = top_cocurrance.filter(pl.col("count_right") > int(min_check))
+top_cocurrance = top_cocurrance.filter(pl.col("count_right") >= int(min_check))
 top_cocurrance = top_cocurrance.head(20)
 #st.write(top_cocurrance)
 
@@ -867,7 +867,7 @@ with col1:
 	st.write(result_placeval.sort("Count", descending=True).head(30))
 
 final_df = final_df.rename({"count_right": "Count"})
-final_df = final_df.filter(pl.col("Count") > int(min_check))
+final_df = final_df.filter(pl.col("Count") >= int(min_check))
 
 with col2:
 	st.write_stream(stream_data_1())
