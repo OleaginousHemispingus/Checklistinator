@@ -392,7 +392,7 @@ def big_area(area_list):
 		
 		result = filter_by_date_range(df = result, start_date_str = str(start_date), end_date_str = str(end_date))
 		new_place = checklist_split[:-8]
-
+		place_original = big_dict_loaded.get(place_inputted_user)
 		if new_place != place_original:
 			length = place_original.split('-')
 			level = len(length)
