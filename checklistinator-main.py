@@ -21,7 +21,7 @@ import psutil
 import tracemalloc
 import gc
 
-tracemalloc.start()
+#tracemalloc.start()
 #Getting secrets in order to access my google cloud account (we don't want to expose the raw files to anyone)
 #Converting the secrets to a dict
 service_account_json_str = st.secrets["gcs"]["service_account"]
@@ -269,6 +269,7 @@ try:
 	int(min_check)
 except:
 	st.write('Please enter a valid minimum checklist count')
+	st.stop()
 	
 
 
@@ -823,7 +824,7 @@ col1, col2 = st.columns([5,7])
 placeval_df = place_counts.join(result_placeval, on="Place", how="left").fill_null(0)
 #st.write(placeval_df.head(15))
 
-st.write('starting to calculate percents')
+#st.write('starting to calculate percents')
 
 
 placeval_df = placeval_df.with_columns((
@@ -850,12 +851,12 @@ top_cocurrance = top_cocurrance.filter(pl.col("count_right") > int(min_check))
 top_cocurrance = top_cocurrance.head(20)
 #st.write(top_cocurrance)
 
-st.write('done')
+#st.write('done')
 
 
 final_df = top_results_percents.vstack(top_cocurrance).unique(subset=["Place"])
 
-st.write('stacked')
+#st.write('stacked')
 
 
 result_placeval = result_placeval.rename({"count": "Count"})
@@ -883,11 +884,11 @@ if "df" in st.session_state:
     del st.session_state["df"]
 st.cache_data.clear()
 
-snapshot = tracemalloc.take_snapshot()
-top_stats = snapshot.statistics('lineno')
+#snapshot = tracemalloc.take_snapshot()
+#top_stats = snapshot.statistics('lineno')
 
-st.write(" Top 10 memory-consuming lines ")
-for stat in top_stats[:10]:
-	st.write(stat)
+#st.write(" Top 10 memory-consuming lines ")
+#for stat in top_stats[:10]:
+#	st.write(stat)
 
-tracemalloc.stop()
+#tracemalloc.stop()
