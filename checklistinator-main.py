@@ -576,6 +576,7 @@ def get_place(place_str: str):
 					matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
 					st.write(len(matching_files))
 					for f in matching_files:
+						st.write(f)
 						path = os.path.join('checklistinator', f)
 						area_lists.append(path)
 #						st.write("appended!")
