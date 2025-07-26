@@ -595,7 +595,7 @@ st.write_stream(stream_data_co())
 
 #fs.ls("birds-data/data")
 
-#st.write(filename)
+st.write(filename)
 
 gcs_path = os.path.join("birds-data", *filename.split("/"))
 #st.write(gcs_path)
