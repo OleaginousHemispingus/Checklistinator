@@ -277,7 +277,7 @@ def big_area(area_list):
 	all_result_placeval = []
 	all_place_counts = []
 	for checklist in area_list:
-		st.write(checklist)
+		#st.write(checklist)
 		checklist_split = checklist.split("/")
 		checklist_name = f"{checklist_split[2]}/{checklist_split[3]}"
 		st.write(f"Collecting: {checklist_name}")
@@ -286,59 +286,98 @@ def big_area(area_list):
 		common_ids = set()
 		common_ids_original = set()
 		gcs_path = os.path.join("birds-data", checklist_name)
-		st.write(gcs_path)
+		#st.write(gcs_path)
 		with fs.open(gcs_path, 'rb') as f:
 			df = pl.read_parquet(f)
 		#Yeah I know that it should be called a combination, not a permutation
 		if sharpness != len(species):
-		#	st.write("The following combinations will be used:")
-			st.write_stream(stream_data_combos())
+#			st.write("The following combinations will be used:")
+			report_memory()
+#			st.write_stream(stream_data_combos())
+			report_memory()
 			nom = 1
+			report_memory()
 			permutations = []
+			report_memory()
 			diff = len(species) - sharpness
 			for i in range(diff+1):
 				for species_i in combinations(species, sharpness + i):
 					permutations.append(species_i)
 #			st.write(permutations)
+			report_memory()
 			for sp in species: 
-				filtered_1 = [df.filter(pl.col("Common_Name") == sp).select(["Place", "Checklist_ID", "Observation_Date"])]
-#				st.write(filtered)
-				dictionary[sp] = filtered_1
+				filtered_1 = df.filter(pl.col("Common_Name") == sp).select(["Checklist_ID"]).collect()
+				filtered_1_list = filtered_1["Checklist_ID"].to_list()
+#				st.write(type(filtered_1))
+				report_memory()
+#				columns_to_select = ["Checklist_ID"]
+	#			available_columns = [col for col in columns_to_select if col in filtered_1.columns]
+				#filtered_1 = filtered_1.select(available_columns)
+#				st.write(filtered1)
+				dictionary[sp] = filtered_1_list
+	#			st.write(filtered_1_list)
+				report_memory()
+				del(filtered_1)
+				del(filtered_1_list)
+				gc.collect()
+				report_memory()
 			for combo in permutations:
 				n = 1
-#				st.write(combo)
+				#st.write(combo)
 				combodf = pl.DataFrame({"Combinations": [combo]})
 #				st.write(type(combodf))
 				combonotions = pl.concat([combonotions, combodf], how="vertical")
 				for specc in combo:
 #					st.write(specc)
 					filtered_specc = dictionary[specc]
-#					st.write(filtered_specc)
-					for f in filtered_specc:
-						#st.write(f["Checklist_ID"])
-						ids_original = set(f["Checklist_ID"].to_list())
-						#st.write(ids_original)
-						if n == 1:
-							common_ids_original = ids_original
-						else:
-							common_ids_original = common_ids_original & ids_original
-						n = n + 1
-#				st.write(common_ids_original)
-#				st.write(type(common_ids_original))
+		#			st.write(filtered_specc)
+					filtered_set = set(filtered_specc)
+					if n == 1:
+						common_ids_original = filtered_set
+					else:
+						common_ids_original = common_ids_original & filtered_set
+					n = n + 1
+#					st.write(common_ids_original)
+#					st.write(type(common_ids_original))
 				if nom == 1:
 					common_ids = common_ids_original
 				else:
 					common_ids = common_ids | common_ids_original
+				#st.write(common_ids)
 				nom = nom + 1
-			filtered = [df.filter(pl.col("Common_Name").is_in(species)).select(["Place", "Checklist_ID", "Observation_Date"])]
+			filtered = []
+			for sp in species:
+				query = (df.filter(pl.col("Common_Name").is_in(species)).collect())
+				columns_to_select = ["Place", "Checklist_ID", "Observation_Date", "State", "County"]
+				available_columns = [col for col in columns_to_select if col in query.columns]
+				query = query.select(available_columns)
+				filtered.append(query)
+				del(query)
+				gc.collect()
 			st.write(combonotions)
-
+		#this is what happens if it is the same, e.g., 6 out of 6 species
 		else: 
-			filtered = [df.filter(pl.col("Common_Name") == sp).select(["Place", "Checklist_ID", "Observation_Date"]) for sp in species]
+			filtered = []
+			for sp in species:
+				st.write('starting')
+				report_memory()
+				query = (df.filter(pl.col("Common_Name") == sp).collect())
+				report_memory()
+				columns_to_select = ["Place", "Checklist_ID", "Observation_Date", "State", "County"]
+				report_memory()
+				available_columns = [col for col in columns_to_select if col in query.columns]
+				query = query.select(available_columns)
+				report_memory()
+				filtered.append(query)
+				del(query)
+				gc.collect()
 			#st.write(filtered)
 			#st.write(f["Checklist_ID"])
 			ids = [set(f["Checklist_ID"].to_list()) for f in filtered]
+			report_memory()
+
 			common_ids = set.intersection(*ids)
+	
 		
 		result = filtered[0].filter(pl.col("Checklist_ID").is_in(common_ids))
 		result_try = result.group_by(["Place", "Observation_Date"]).len()
