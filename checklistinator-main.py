@@ -567,7 +567,7 @@ if sharpness != len(species):
 		#filtered_1 = filtered_1.select(available_columns)
 #		st.write(filtered1)
 		dictionary[sp] = filtered_1_list
-	#	st.write(filtered_1_list)
+		st.write(filtered_1_list)
 		report_memory()
 		del(filtered_1)
 		del(filtered_1_list)
@@ -583,10 +583,11 @@ if sharpness != len(species):
 #			st.write(specc)
 			filtered_specc = dictionary[specc]
 			st.write(filtered_specc)
+			filtered_set = set(filtered_specc)
 			if n == 1:
-				common_ids_original = filtered_specc
+				common_ids_original = filtered_set
 			else:
-				common_ids_original = common_ids_original & filtered_specc
+				common_ids_original = common_ids_original & filtered_set
 			n = n + 1
 #			st.write(common_ids_original)
 #			st.write(type(common_ids_original))
