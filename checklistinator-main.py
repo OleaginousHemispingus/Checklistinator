@@ -492,7 +492,7 @@ def get_place(place_str: str):
 					st.write("it's in counties!")
 					pattern = re.compile(f"^{re.escape(place_original)}")
 					st.write(pattern)
-					matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(f)]
+					matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
 					st.write(len(matching_files))
 					for f in matching_files:
 						path = os.path.join('checklistinator', f)
