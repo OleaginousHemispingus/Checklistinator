@@ -265,6 +265,10 @@ if not start_date:
 
 if not end_date:
 	st.stop()
+try:
+	int(min_check)
+except:
+	st.write('Please enter a valid minimum checklist count')
 	
 
 
@@ -485,7 +489,7 @@ def filter_by_date_range(df: pl.DataFrame, start_date_str: str, end_date_str: st
 			end_date = datetime.strptime(end_date_str, "%Y-%m-%d").date()
 			return df.filter((pl.col(date_col) >= start_date) & (pl.col(date_col) <= end_date))
 		except:
-			st.write("please enter a valid date")
+			st.write("Please enter a valid date")
 			st.stop()
 	else:
 		try:
@@ -494,7 +498,7 @@ def filter_by_date_range(df: pl.DataFrame, start_date_str: str, end_date_str: st
 			end_month = int(end_date_str.split("-")[0])
 			end_day = int(end_date_str.split("-")[1])
 		except:
-			st.write("please enter a valid date")
+			st.write("Please enter a valid date")
 			st.stop()
 #		st.write('splitting...')
 		df = df.with_columns([pl.col(date_col).dt.month().alias("month"), pl.col(date_col).dt.day().alias("day")])
@@ -721,7 +725,7 @@ else:
 #st.write(type(filtered))
 #st.write(filtered[0].unique())
 	
-st.write('ending')
+#st.write('ending')
 
 
 
@@ -755,7 +759,7 @@ if new_place != place_original:
 
 result = result.select("Place", "Checklist_ID", "Observation_Date")
 
-st.write('before trytry')
+#st.write('before trytry')
 
 
 
@@ -770,7 +774,7 @@ bad_places = bad_places_df['Place'].to_list()
 #st.write(bad_places)
 #st.write(tryrty)
 
-st.write('after trytry')
+#st.write('after trytry')
 
 
 
@@ -778,7 +782,7 @@ result = result.filter(~pl.col("Place").is_in(bad_places))
 
 st.write_stream(stream_data_ca())
 
-st.write('before placeval')
+#st.write('before placeval')
 
 
 lazy_df = df.unique(subset=["Checklist_ID"])
@@ -799,7 +803,7 @@ del(checklist_placeval)
 gc.collect()
 
 
-st.write('after placecounts')
+#st.write('after placecounts')
 
 
 result_placeval = result["Place"].value_counts()
@@ -810,7 +814,7 @@ gc.collect()
 
 result_placeval = result_placeval.filter(pl.col("count") > 1)
 
-st.write('after resultcounts')
+#st.write('after resultcounts')
 
 
 col1, col2 = st.columns([5,7])
