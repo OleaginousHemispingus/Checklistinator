@@ -393,8 +393,8 @@ def big_area(area_list):
 		spl1 = checklist_split[1]
 		new_place = spl1[:-12]
 		place_original = big_dict_loaded.get(place_inputted_user)
-		#st.write(checklist_split)
-		#st.write(place_original)
+		st.write(checklist_split)
+		st.write(place_original)
 		if new_place != place_original:
 			length = place_original.split('-')
 			level = len(length)
