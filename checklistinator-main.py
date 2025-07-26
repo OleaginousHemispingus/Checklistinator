@@ -549,6 +549,7 @@ def get_place(place_str: str):
 	countries_w_states = ["US", "CA", "IN", "AU", "GB", "ES", "TW", "CO", "BR", "MX", "CR", "AR", "PE", "PT", "CL", "DE", "EC", "NZ", "PA"]
 	states_w_counties = ["US-CA", "US-AZ", "US-FL", "US-CO", "US-WI", "US-IL", "US-GA", "US-MN", "US-MD", "US-NC", "US-OR", "US-MA", "US-MI", "US-NJ", "US-OH", "US-PA", "US-TX", "US-VA", "US-WA", "CA-QC", "CA-BC", "CA-ON", "GB-ENG", "US-NY"]
 	split_places = ["AU-QLD", "AU-VIC", "AU-NSW", "BR-SP", "IN-KA", "IN-KL", "IN-TN", "US-IN", "US-CT", "US-ME"]
+	split_counties = ["US-CA-059", "US-NJ-009", "US-IL-031", "US-AZ-019", "US-CA-073", "US-OH-095", "US-CA-037"]
 	global input_file
 	global level
 	global place_original
@@ -636,7 +637,7 @@ def get_place(place_str: str):
 			area_lists.append(path)
 #			st.write("appended!")
 		big_area(area_lists)
-	elif len(place.split('-')) ==3:
+	elif place in split_counties:
 		pattern = re.compile(f"^{re.escape(place_original)}")
 		##st.write(pattern)
 		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
