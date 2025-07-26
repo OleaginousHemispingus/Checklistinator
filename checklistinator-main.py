@@ -521,12 +521,12 @@ def get_place(place_str: str):
 	global input_file
 	global level
 	global place_original
-	possible_file_paths = [f for f in fs.ls("birds-data/checklistinator")]
+	possible_file_paths = [f[:-8] for f in fs.ls("birds-data/checklistinator")]
 	for f in possible_file_paths: 
-		st.write(f)
+		#st.write(f)
 		posible_file = f.split('/')[2]
 		posible_files.append(posible_file)
-	#st.write(posible_files)
+	st.write(posible_files)
 	place_original = place_str
 	place = place_original
 	if place in posible_files:
