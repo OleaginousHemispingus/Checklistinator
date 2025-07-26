@@ -465,7 +465,7 @@ def get_place(place_str: str):
 	else:
 		placesplit = place.split('-')
 	#	st.write(placesplit)
-		st.write(place_original)
+		#st.write(place_original)
 		place = f"{placesplit[0]}-{placesplit[1]}"
 		if place in posible_files:
 			input_file = f"{place}.parquet"
@@ -474,9 +474,11 @@ def get_place(place_str: str):
 			placesplit = place.split('-')
 			place = placesplit[0]
 			if place in posible_files:
+				st.write("possible!")
 				input_file = f"{place}.parquet"
 #				st.write(input_file)
 			else:
+				st.write("else!")
 				if place_original in countries_w_states:
 					st.write("it's in states!")
 					pattern = re.compile(f"^{re.escape(place_original)}")
