@@ -274,7 +274,7 @@ except:
 
 
 #f = str(place_inputted_user).split('-')
-#st.write(f)
+#
 
 #What happens if there's a big area? California, for instance, is spread among like 50 county files. Here is how we deal with that
 def big_area(area_list):
@@ -523,7 +523,7 @@ def get_place(place_str: str):
 	global place_original
 	possible_file_paths = [f[:-8] for f in fs.ls("birds-data/checklistinator")]
 	for f in possible_file_paths: 
-		st.write(f)
+		#st.write(f)
 		posible_file = f.split('/')[2]
 		posible_files.append(posible_file)
 	#st.write(posible_files)
