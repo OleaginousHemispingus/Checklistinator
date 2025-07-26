@@ -282,9 +282,9 @@ def big_area(area_list):
 	all_result_placeval = []
 	all_place_counts = []
 	for checklist in area_list:
-		#st.write(checklist)
+		st.write(checklist)
 		checklist_split = checklist.split("/")
-		checklist_name = f"{checklist_split[2]}"
+		checklist_name = f"{checklist}"
 		st.write(f"Collecting: {checklist_name}")
 		combonotions = pl.DataFrame()
 		dictionary = {}
