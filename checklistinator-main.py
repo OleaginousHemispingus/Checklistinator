@@ -394,8 +394,8 @@ def big_area(area_list):
 		spl1 = checklist_split[1]
 		new_place = spl1[:-12]
 		place_original = big_dict_loaded.get(place_inputted_user)
-		st.write(checklist_split)
-		st.write(place_original)
+		#st.write(checklist_split)
+		#st.write(place_original)
 		if new_place != place_original:
 			length = place_original.split('-')
 			level = len(length)
@@ -581,7 +581,9 @@ def get_place(place_str: str):
 #			st.write("appended!")
 		big_area(area_lists)
 	elif place[:-3] in split_places:
-		pattern = re.compile(f"^{re.escape(place_original[:-3])}")
+		st.write('3')
+		patternplace = place_original[:-3]
+		pattern = re.compile(f"^{re.escape(patternplace)}")
 		st.write(pattern)
 		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
 		st.write(len(matching_files))
@@ -592,8 +594,9 @@ def get_place(place_str: str):
 #			st.write("appended!")
 		big_area(area_lists)
 	elif place[:-4] in split_places:
-		pattern = re.compile(f"^{re.escape(place_original[:-4])}")
-		st.write(pattern)
+		st.write('4')
+		patternplace = place_original[:-4]
+		pattern = re.compile(f"^{re.escape(patternplace)}")
 		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
 		st.write(len(matching_files))
 		for f in matching_files:
@@ -603,7 +606,9 @@ def get_place(place_str: str):
 #			st.write("appended!")
 		big_area(area_lists)
 	elif place[:-2] in split_places:
-		pattern = re.compile(f"^{re.escape(place_original[:-2])}")
+		st.write('2')
+		patternplace = place_original[:-2]
+		pattern = re.compile(f"^{re.escape(patternplace)}")
 		st.write(pattern)
 		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
 		st.write(len(matching_files))
