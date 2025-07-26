@@ -144,7 +144,7 @@ def stream_data_cit():
         tt.sleep(0.02)
         
 
-#Loading the dictiory with all place names and their codes 'Prince George's, Maryland, United States':'US-MD-033
+#Loading the dictiory with all place names and their codes 'Prince George's, Maryland, United States':'US-MD-033'
 with open("data/big_dict.json", "r") as file:
     big_dict_loaded = json.load(file)
 
@@ -292,35 +292,35 @@ def big_area(area_list):
 		#Yeah I know that it should be called a combination, not a permutation
 		if sharpness != len(species):
 #			st.write("The following combinations will be used:")
-			report_memory()
+			
 #			st.write_stream(stream_data_combos())
-			report_memory()
+			
 			nom = 1
-			report_memory()
+			
 			permutations = []
-			report_memory()
+			
 			diff = len(species) - sharpness
 			for i in range(diff+1):
 				for species_i in combinations(species, sharpness + i):
 					permutations.append(species_i)
 #			st.write(permutations)
-			report_memory()
+			
 			for sp in species: 
 				filtered_1 = df.filter(pl.col("Common_Name") == sp).select(["Checklist_ID"]).collect()
 				filtered_1_list = filtered_1["Checklist_ID"].to_list()
 #				st.write(type(filtered_1))
-				report_memory()
+				
 #				columns_to_select = ["Checklist_ID"]
 	#			available_columns = [col for col in columns_to_select if col in filtered_1.columns]
 				#filtered_1 = filtered_1.select(available_columns)
 #				st.write(filtered1)
 				dictionary[sp] = filtered_1_list
 	#			st.write(filtered_1_list)
-				report_memory()
+				
 				del(filtered_1)
 				del(filtered_1_list)
 				gc.collect()
-				report_memory()
+				
 			for combo in permutations:
 				n = 1
 				#st.write(combo)
@@ -361,21 +361,21 @@ def big_area(area_list):
 			filtered = []
 			for sp in species:
 				st.write('starting')
-				report_memory()
+				
 				query = (df.filter(pl.col("Common_Name") == sp).collect())
-				report_memory()
+				
 				columns_to_select = ["Place", "Checklist_ID", "Observation_Date", "State", "County"]
-				report_memory()
+				
 				available_columns = [col for col in columns_to_select if col in query.columns]
 				query = query.select(available_columns)
-				report_memory()
+				
 				filtered.append(query)
 				del(query)
 				gc.collect()
 			#st.write(filtered)
 			#st.write(f["Checklist_ID"])
 			ids = [set(f["Checklist_ID"].to_list()) for f in filtered]
-			report_memory()
+			
 
 			common_ids = set.intersection(*ids)
 	
@@ -384,7 +384,7 @@ def big_area(area_list):
 		del(filtered)
 		del(common_ids)
 		gc.collect()
-		report_memory()
+		
 		result = filter_by_date_range(df = result, start_date_str = str(start_date), end_date_str = str(end_date))
 		result = result.select("Place", "Checklist_ID", "Observation_Date")
 		result_try = result.group_by(["Place", "Observation_Date"]).len()
@@ -582,7 +582,7 @@ st.write_stream(stream_data_co())
 gcs_path = os.path.join("birds-data", *filename.split("/"))
 #st.write(gcs_path)
 
-report_memory()
+
 #Opening our db
 with fs.open(gcs_path, 'rb') as f:
 #	data = f.read(1024)
@@ -590,7 +590,7 @@ with fs.open(gcs_path, 'rb') as f:
 	df = pl.scan_parquet(f)
 #st.write("loaded")
 
-report_memory()
+
 
 #st.write(df.collect().head())
 
@@ -600,7 +600,7 @@ common_ids_original = set()
 
 st.write_stream(stream_data_c())
 
-report_memory()
+
 
 #st.write("Co-occurance of all selected:")
 #st.write(common_ids)
@@ -611,35 +611,35 @@ combonotions = pl.DataFrame()
 #Yeah I know that it should be called a combination, not a permutation
 if sharpness != len(species):
 #	st.write("The following combinations will be used:")
-	report_memory()
+	
 #	st.write_stream(stream_data_combos())
-	report_memory()
+	
 	nom = 1
-	report_memory()
+	
 	permutations = []
-	report_memory()
+	
 	diff = len(species) - sharpness
 	for i in range(diff+1):
 		for species_i in combinations(species, sharpness + i):
 			permutations.append(species_i)
 #	st.write(permutations)
-	report_memory()
+	
 	for sp in species: 
 		filtered_1 = df.filter(pl.col("Common_Name") == sp).select(["Checklist_ID"]).collect()
 		filtered_1_list = filtered_1["Checklist_ID"].to_list()
 #		st.write(type(filtered_1))
-		report_memory()
+		
 #		columns_to_select = ["Checklist_ID"]
 	#	available_columns = [col for col in columns_to_select if col in filtered_1.columns]
 		#filtered_1 = filtered_1.select(available_columns)
 #		st.write(filtered1)
 		dictionary[sp] = filtered_1_list
 	#	st.write(filtered_1_list)
-		report_memory()
+		
 		del(filtered_1)
 		del(filtered_1_list)
 		gc.collect()
-		report_memory()
+		
 	for combo in permutations:
 		n = 1
 		#st.write(combo)
@@ -679,21 +679,21 @@ else:
 	filtered = []
 	for sp in species:
 		st.write('starting')
-		report_memory()
+		
 		query = (df.filter(pl.col("Common_Name") == sp).collect())
-		report_memory()
+		
 		columns_to_select = ["Place", "Checklist_ID", "Observation_Date", "State", "County"]
-		report_memory()
+		
 		available_columns = [col for col in columns_to_select if col in query.columns]
 		query = query.select(available_columns)
-		report_memory()
+		
 		filtered.append(query)
 		del(query)
 		gc.collect()
 	#st.write(filtered)
 	#st.write(f["Checklist_ID"])
 	ids = [set(f["Checklist_ID"].to_list()) for f in filtered]
-	report_memory()
+	
 
 	common_ids = set.intersection(*ids)
 	
@@ -710,7 +710,7 @@ else:
 #st.write(filtered[0].unique())
 	
 st.write('ending')
-report_memory()
+
 
 
 #filtering
@@ -718,13 +718,13 @@ result = filtered[0].filter(pl.col("Checklist_ID").is_in(common_ids)).unique()
 del(filtered)
 del(common_ids)
 gc.collect()
-report_memory()
+
 
 #st.write('or here?')
 
 result = filter_by_date_range(df = result, start_date_str = str(start_date), end_date_str = str(end_date))
 
-report_memory()
+
 
 #st.write('here?')
 
@@ -743,7 +743,7 @@ if new_place != place_original:
 result = result.select("Place", "Checklist_ID", "Observation_Date")
 
 st.write('before trytry')
-report_memory()
+
 
 
 
@@ -758,7 +758,7 @@ bad_places = bad_places_df['Place'].to_list()
 #st.write(tryrty)
 
 st.write('after trytry')
-report_memory()
+
 
 
 result = result.filter(~pl.col("Place").is_in(bad_places))
@@ -766,28 +766,28 @@ result = result.filter(~pl.col("Place").is_in(bad_places))
 st.write_stream(stream_data_ca())
 
 st.write('before placeval')
-report_memory()
+
 
 lazy_df = df.unique(subset=["Checklist_ID"])
-report_memory()
+
 del df
-report_memory()
+
 gc.collect()
-report_memory()
+
 checklist_placeval = lazy_df.select("Place", "Observation_Date").collect()
-report_memory()
+
 checklist_placeval = filter_by_date_range(df = checklist_placeval, start_date_str = str(start_date), end_date_str = str(end_date))
-report_memory()
+
 place_counts = checklist_placeval["Place"].value_counts()
-report_memory()
+
 del(lazy_df)
 del(checklist_placeval)
-report_memory()
+
 gc.collect()
-report_memory()
+
 
 st.write('after placecounts')
-report_memory()
+
 
 result_placeval = result["Place"].value_counts()
 del(result)
@@ -798,7 +798,7 @@ gc.collect()
 result_placeval = result_placeval.filter(pl.col("count") > 1)
 
 st.write('after resultcounts')
-report_memory()
+
 
 col1, col2 = st.columns([5,7])
 
@@ -807,7 +807,7 @@ placeval_df = place_counts.join(result_placeval, on="Place", how="left").fill_nu
 #st.write(placeval_df.head(15))
 
 st.write('starting to calculate percents')
-report_memory()
+
 
 placeval_df = placeval_df.with_columns((
 	(pl.col("count_right") / pl.col("count") * 100).round(2).alias("Co-occurrence Rate")
@@ -834,12 +834,12 @@ top_cocurrance = top_cocurrance.head(20)
 #st.write(top_cocurrance)
 
 st.write('done')
-report_memory()
+
 
 final_df = top_results_percents.vstack(top_cocurrance).unique(subset=["Place"])
 
 st.write('stacked')
-report_memory()
+
 
 result_placeval = result_placeval.rename({"count": "Count"})
 
@@ -860,7 +860,7 @@ with col2:
 st.write_stream(stream_data_2())
 st.write_stream(stream_data_cit())
 
-report_memory()
+
 
 if "df" in st.session_state:
     del st.session_state["df"]
