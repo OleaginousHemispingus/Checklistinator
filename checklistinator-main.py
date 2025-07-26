@@ -298,7 +298,7 @@ def big_area(area_list):
 		if sharpness != len(species):
 #			st.write("The following combinations will be used:")
 			
-#			st.write_stream(stream_data_combos())
+			st.write_stream(stream_data_combos())
 			
 			nom = 1
 			
@@ -629,7 +629,7 @@ combonotions = pl.DataFrame()
 if sharpness != len(species):
 #	st.write("The following combinations will be used:")
 	
-#	st.write_stream(stream_data_combos())
+	st.write_stream(stream_data_combos())
 	
 	nom = 1
 	
