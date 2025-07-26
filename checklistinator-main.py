@@ -504,7 +504,7 @@ def filter_by_date_range(df: pl.DataFrame, start_date_str: str, end_date_str: st
 posible_files = []
 def get_place(place_str: str):
 	countries_w_states = ["US", "CA", "IN", "AU", "GB", "ES", "TW", "CO", "BR", "MX", "CR", "AR"]
-	states_w_counties = ["US-CA", "US-AZ", "US-FL", "US-CO", "US-WI", "US-IL", "US-MA", "US-MI", "US-NJ", "US-OH", "US-PA", "US-TX", "US-VA", "US-WA", "CA-QC", "CA-BC", "US-ON"]
+	states_w_counties = ["US-CA", "US-AZ", "US-FL", "US-CO", "US-WI", "US-IL", "US-MA", "US-MI", "US-NJ", "US-OH", "US-PA", "US-TX", "US-VA", "US-WA", "CA-QC", "CA-BC", "CA-ON", "GB-ENG", "US-NY"]
 	global input_file
 	global level
 	global place_original
