@@ -395,7 +395,7 @@ def big_area(area_list):
 			new_place_list = new_place_original.split('-')
 			new_place = f"{new_place_list[0]}-{new_place_list[1]}"
 		else:
-			new_place = spl1[:-12]
+			new_place = spl1.split('_')[0]
 		place_original = big_dict_loaded.get(place_inputted_user)
 		st.write(checklist_split)
 		st.write(new_place)
@@ -565,7 +565,7 @@ def get_place(place_str: str):
 		for f in matching_files:
 			#st.write(f)
 			path = f[11:]
-			st.write(path)
+			#st.write(path)
 			area_lists.append(path)
 #			st.write("appended!")
 		big_area(area_lists)
