@@ -299,8 +299,6 @@ def big_area(area_list):
 		if sharpness != len(species):
 #			st.write("The following combinations will be used:")
 			
-			st.write_stream(stream_data_combos())
-			
 			nom = 1
 			
 			permutations = []
@@ -361,7 +359,7 @@ def big_area(area_list):
 				filtered.append(query)
 				del(query)
 				gc.collect()
-		st.write(combonotions)
+		
 		#this is what happens if it is the same, e.g., 6 out of 6 species
 		else: 
 			filtered = []
@@ -385,6 +383,11 @@ def big_area(area_list):
 
 			common_ids = set.intersection(*ids)
 	
+		try: 
+			st.write_stream(stream_data_combos())
+			st.write(combonotions)
+		except:
+			pass
 		
 		result = filtered[0].filter(pl.col("Checklist_ID").is_in(common_ids)).unique()
 		del(filtered)
