@@ -431,11 +431,12 @@ def big_area(area_list):
 		del(checklist_placeval)
 		del(result_placeval)
 		gc.collect()
-	try: 
+	if combonotions.is_empty: 
+		pass
+	else:
 		st.write_stream(stream_data_combos())
 		st.write(combonotions)
-	except:
-		pass
+	
 #	st.write_stream(stream_data_ca())
 	total_place_counts = pl.concat(all_place_counts).group_by("Place").sum()
 #	st.write(total_place_counts)
