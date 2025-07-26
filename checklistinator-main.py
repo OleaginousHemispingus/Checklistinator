@@ -288,7 +288,7 @@ def big_area(area_list):
 		gcs_path = os.path.join("birds-data", checklist_name)
 		#st.write(gcs_path)
 		with fs.open(gcs_path, 'rb') as f:
-			df = pl.read_parquet(f)
+			df = pl.scan_parquet(f)
 		#Yeah I know that it should be called a combination, not a permutation
 		if sharpness != len(species):
 #			st.write("The following combinations will be used:")
@@ -379,7 +379,13 @@ def big_area(area_list):
 			common_ids = set.intersection(*ids)
 	
 		
-		result = filtered[0].filter(pl.col("Checklist_ID").is_in(common_ids))
+		result = filtered[0].filter(pl.col("Checklist_ID").is_in(common_ids)).unique()
+		del(filtered)
+		del(common_ids)
+		gc.collect()
+		report_memory()
+		result = filter_by_date_range(df = result, start_date_str = str(start_date), end_date_str = str(end_date))
+		result = result.select("Place", "Checklist_ID", "Observation_Date")
 		result_try = result.group_by(["Place", "Observation_Date"]).len()
 		#st.write(result_try)
 		tryrty = result_try["Place"].value_counts()
@@ -390,11 +396,17 @@ def big_area(area_list):
 #		st.write(bad_places)
 #		st.write(tryrty)
 		result = result.filter(~pl.col("Place").is_in(bad_places))
-		checklist_placeval = df.sort("Checklist_ID").unique(subset=["Checklist_ID"])
+		lazy_df = df.unique(subset=["Checklist_ID"])
+		checklist_placeval = lazy_df.select("Place", "Observation_Date").collect()
+		checklist_placeval = filter_by_date_range(df = checklist_placeval, start_date_str = str(start_date), end_date_str = str(end_date))
 		place_counts = checklist_placeval["Place"].value_counts()
 		result_placeval = result["Place"].value_counts()
 		all_result_placeval.append(result_placeval)
 		all_place_counts.append(place_counts)
+		del(place_counts)
+		gc.collect()
+		del(result_placeval)
+		gc.collect()
 #	st.write_stream(stream_data_ca())
 	total_place_counts = pl.concat(all_place_counts).group_by("Place").sum()
 #	st.write(total_place_counts)
@@ -416,7 +428,9 @@ def big_area(area_list):
 	#st.write(top_results_percents)
 	top_results_percents = top_results_percents.select(["Place", "Co-occurrence Rate", "count_right"])
 #	st.write(top_results_percents)
-	top_cocurrance = placeval_df.sort("Co-occurrence Rate", descending=True).select(["Place", "Co-occurrence Rate", "count_right"]).head(20)
+	top_cocurrance = placeval_df.sort("Co-occurrence Rate", descending=True).select(["Place", "Co-occurrence Rate", "count_right"])
+	top_cocurrance = top_cocurrance.filter(pl.col("count_right") > int(min_check))
+	top_cocurrance = top_cocurrance.head(20)
 #	st.write(top_cocurrance)
 	#st.write(top_cocurrance)
 	final_df = top_results_percents.vstack(top_cocurrance).unique(subset=["Place"])
@@ -427,11 +441,17 @@ def big_area(area_list):
 		st.write_stream(stream_data())
 		st.write(total_result_placeval.sort("Count", descending=True).head(30))
 	final_df = final_df.rename({"count_right": "Count"})
+	final_df = final_df.filter(pl.col("Count") > int(min_check))
 	with col2:
 		st.write_stream(stream_data_1())
 		st.write(final_df.sort("Co-occurrence Rate", descending=True).select(["Place", "Co-occurrence Rate", "Count"]))
+		st.caption("\n Anything with less than " + str(min_check) + " reports at a location are not included.")
+		st.caption("\n This includes the top 10 results from the raw occurance counts to the left (if they have enough reports).")
 	st.write_stream(stream_data_2())
 	st.write_stream(stream_data_cit())
+	if "df" in st.session_state:
+    		del st.session_state["df"]
+	st.cache_data.clear()
 	sys.exit()
 
 	#total_place_counts = pl.concat(all_place_counts).group_by("Place").sum()
