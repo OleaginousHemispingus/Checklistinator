@@ -573,7 +573,7 @@ if sharpness != len(species):
 		report_memory()
 	for combo in permutations:
 		n = 1
-#		st.write(combo)
+		st.write(combo)
 		combodf = pl.DataFrame({"Combinations": [combo]})
 #		st.write(type(combodf))
 		combonotions = pl.concat([combonotions, combodf], how="vertical")
@@ -596,6 +596,7 @@ if sharpness != len(species):
 			common_ids = common_ids_original
 		else:
 			common_ids = common_ids | common_ids_original
+		st.write(common_ids)
 		nom = nom + 1
 	filtered = []
 	for sp in species:
