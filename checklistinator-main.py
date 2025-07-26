@@ -285,7 +285,8 @@ def big_area(area_list):
 		dictionary = {}
 		common_ids = set()
 		common_ids_original = set()
-		gcs_path = os.path.join("birds-data", *checklist.split("/"))
+		gcs_path = os.path.join("birds-data", checklist)
+		st.write(gcs_path)
 		with fs.open(gcs_path, 'rb') as f:
 			df = pl.read_parquet(f)
 		#Yeah I know that it should be called a combination, not a permutation
