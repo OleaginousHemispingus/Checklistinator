@@ -539,8 +539,7 @@ def get_place(place_str: str):
 		st.write(len(matching_files))
 		for f in matching_files:
 			st.write(f)
-			path = os.path.join('birds-data/checklistinator', f)
-			area_lists.append(path)
+			area_lists.append(f)
 #			st.write("appended!")
 		big_area(area_lists)
 	else:
