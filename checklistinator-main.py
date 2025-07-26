@@ -535,7 +535,7 @@ def get_place(place_str: str):
 	elif len(place.split('-')) ==1:
 		pattern = re.compile(f"^{re.escape(place_original)}")
 		st.write(pattern)
-		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(f)]
+		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
 		st.write(len(matching_files))
 		for f in matching_files:
 			#st.write(f)
@@ -563,7 +563,7 @@ def get_place(place_str: str):
 				if str(place_original) in countries_w_states:
 					st.write("it's in states!")
 					pattern = re.compile(f"^{re.escape(place_original)}")
-					matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(f)]
+					matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
 					st.write(len(matching_files))
 					for f in matching_files:
 						area_lists.append(f)
