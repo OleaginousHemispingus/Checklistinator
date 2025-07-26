@@ -561,9 +561,9 @@ if sharpness != len(species):
 		filtered_1 = [df.filter(pl.col("Common_Name") == sp).collect()]
 		st.write(type(filtered_1))
 		report_memory()
-#		columns_to_select = ["Place", "Checklist_ID", "Observation_Date"]
-	#	available_columns = [col for col in columns_to_select if col in filtered_1.columns]
-		#filtered_1 = filtered_1.select(available_columns)
+		columns_to_select = ["Checklist_ID"]
+		available_columns = [col for col in columns_to_select if col in filtered_1.columns]
+		filtered_1 = filtered_1.select(available_columns)
 #		st.write(filtered1)
 		dictionary[sp] = filtered_1
 		st.write(filtered_1)
