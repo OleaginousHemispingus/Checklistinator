@@ -485,7 +485,7 @@ def filter_by_date_range(df: pl.DataFrame, start_date_str: str, end_date_str: st
 			end_date = datetime.strptime(end_date_str, "%Y-%m-%d").date()
 			return df.filter((pl.col(date_col) >= start_date) & (pl.col(date_col) <= end_date))
 		except:
-			print("please enter a valid date")
+			st.write("please enter a valid date")
 			st.stop()
 	else:
 		try:
@@ -494,7 +494,7 @@ def filter_by_date_range(df: pl.DataFrame, start_date_str: str, end_date_str: st
 			end_month = int(end_date_str.split("-")[0])
 			end_day = int(end_date_str.split("-")[1])
 		except:
-			print("please enter a valid date")
+			st.write("please enter a valid date")
 			st.stop()
 #		st.write('splitting...')
 		df = df.with_columns([pl.col(date_col).dt.month().alias("month"), pl.col(date_col).dt.day().alias("day")])
