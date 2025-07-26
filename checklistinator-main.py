@@ -567,7 +567,7 @@ if sharpness != len(species):
 		#filtered_1 = filtered_1.select(available_columns)
 #		st.write(filtered1)
 		dictionary[sp] = filtered_1_list
-		st.write(filtered_1_list)
+	#	st.write(filtered_1_list)
 		report_memory()
 		del(filtered_1)
 		del(filtered_1_list)
@@ -582,11 +582,11 @@ if sharpness != len(species):
 		for specc in combo:
 #			st.write(specc)
 			filtered_specc = dictionary[specc]
-#			st.write(filtered_specc)
+			st.write(filtered_specc)
 			for f in filtered_specc:
 				#st.write(f["Checklist_ID"])
 				ids_original = set(f)
-				#st.write(ids_original)
+				st.write(ids_original)
 				if n == 1:
 					common_ids_original = ids_original
 				else:
