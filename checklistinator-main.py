@@ -479,7 +479,7 @@ def get_place(place_str: str):
 #				st.write(input_file)
 			else:
 				st.write("else!")
-				if place_original in countries_w_states:
+				if str(place_original) in countries_w_states:
 					st.write("it's in states!")
 					pattern = re.compile(f"^{re.escape(place_original)}")
 					matching_files = [f[:-8] for f in fs.ls("birds-data/checklistinator") if pattern.match(f)]
@@ -488,7 +488,7 @@ def get_place(place_str: str):
 						area_lists.append(f)
 						st.write("appended!")
 					big_area(area_lists)
-				if place_original in states_w_counties:
+				if str(place_original) in states_w_counties:
 #					st.write("it's in counties!")
 					pattern = re.compile(f"^{re.escape(place_original)}")
 					matching_files = [f[:-8] for f in fs.ls("birds-data/checklistinator") if pattern.match(f)]
