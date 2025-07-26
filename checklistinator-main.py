@@ -187,7 +187,7 @@ st.markdown(
 	
     /* Optional: Change background or text color */
     div[data-baseweb="select"] > div {
-        background-color: #2e8b57;  /* Very light green */
+        background-color: #f6fff6;  /* Very light green */
         color: #003300;  /* Dark green text */
     }
     
