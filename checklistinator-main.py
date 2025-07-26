@@ -449,7 +449,6 @@ def get_place(place_str: str):
 	#st.write(posible_files)
 	place_original = place_str
 	place = place_original
-	st.write(place)
 	if place in posible_files:
 		input_file = f"{place}.parquet"
 #		st.write(input_file)
@@ -465,7 +464,7 @@ def get_place(place_str: str):
 		big_area(area_lists)
 	else:
 		placesplit = place.split('-')
-#		st.write(placesplit)
+		st.write(placesplit)
 		place = f"{placesplit[0]}-{placesplit[1]}"
 		if place in posible_files:
 			input_file = f"{place}.parquet"
