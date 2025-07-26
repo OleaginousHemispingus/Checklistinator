@@ -543,6 +543,17 @@ def get_place(place_str: str):
 			area_lists.append(path)
 #			st.write("appended!")
 		big_area(area_lists)
+	elif len(place.split('-')) ==3:
+		pattern = re.compile(f"^{re.escape(place_original)}")
+		st.write(pattern)
+		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
+		st.write(len(matching_files))
+		for f in matching_files:
+			st.write(f)
+			path = f[11:]
+			area_lists.append(path)
+#			st.write("appended!")
+		big_area(area_lists)
 	else:
 		placesplit = place.split('-')
 	#	st.write(placesplit)
