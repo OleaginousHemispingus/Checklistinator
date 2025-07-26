@@ -394,6 +394,7 @@ def big_area(area_list):
 		nounder = spl1.split('_')
 		noper = nounder[0].split('.')
 		components = noper[0].split('-')
+		components_original = place_original.split('-')
 		if len(components) > len(components_original):
 			new_place = place_original
 		else:
