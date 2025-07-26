@@ -284,7 +284,7 @@ def big_area(area_list):
 	for checklist in area_list:
 		#st.write(checklist)
 		checklist_split = checklist.split("/")
-		No_1 = checklist.split[1]
+		No_1 = checklist_split[1]
 		st.write(f"Collecting: {No_1}")
 		combonotions = pl.DataFrame()
 		dictionary = {}
