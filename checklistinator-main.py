@@ -545,7 +545,7 @@ combonotions = pl.DataFrame()
 if sharpness != len(species):
 #	st.write("The following combinations will be used:")
 	report_memory()
-	st.write_stream(stream_data_combos())
+#	st.write_stream(stream_data_combos())
 	report_memory()
 	nom = 1
 	report_memory()
@@ -560,14 +560,14 @@ if sharpness != len(species):
 	for sp in species: 
 		filtered_1 = df.filter(pl.col("Common_Name") == sp).select(["Checklist_ID"]).collect()
 		filtered_1_list = filtered_1["Checklist_ID"].to_list()
-		st.write(type(filtered_1))
+#		st.write(type(filtered_1))
 		report_memory()
 #		columns_to_select = ["Checklist_ID"]
 	#	available_columns = [col for col in columns_to_select if col in filtered_1.columns]
 		#filtered_1 = filtered_1.select(available_columns)
 #		st.write(filtered1)
 		dictionary[sp] = filtered_1_list
-		st.write(filtered_1_list)
+	#	st.write(filtered_1_list)
 		report_memory()
 		del(filtered_1)
 		del(filtered_1_list)
@@ -575,14 +575,14 @@ if sharpness != len(species):
 		report_memory()
 	for combo in permutations:
 		n = 1
-		st.write(combo)
+		#st.write(combo)
 		combodf = pl.DataFrame({"Combinations": [combo]})
 #		st.write(type(combodf))
 		combonotions = pl.concat([combonotions, combodf], how="vertical")
 		for specc in combo:
 #			st.write(specc)
 			filtered_specc = dictionary[specc]
-			st.write(filtered_specc)
+		#	st.write(filtered_specc)
 			filtered_set = set(filtered_specc)
 			if n == 1:
 				common_ids_original = filtered_set
@@ -595,7 +595,7 @@ if sharpness != len(species):
 			common_ids = common_ids_original
 		else:
 			common_ids = common_ids | common_ids_original
-		st.write(common_ids)
+		#st.write(common_ids)
 		nom = nom + 1
 	filtered = []
 	for sp in species:
