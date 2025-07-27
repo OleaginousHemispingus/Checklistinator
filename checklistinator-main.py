@@ -406,9 +406,9 @@ def big_area(area_list):
 		#	new_place = f"{new_place_list[0]}-{new_place_list[1]}"
 		#else:
 		#	new_place = spl1.split('_')[0]
-		st.write(checklist_split)
-		st.write(new_place)
-		st.write(place_original)
+		#st.write(checklist_split)
+		#st.write(new_place)
+		#st.write(place_original)
 		if new_place != place_original:
 			length = place_original.split('-')
 			level = len(length)
