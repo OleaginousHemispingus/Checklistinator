@@ -591,7 +591,7 @@ def get_place(place_str: str):
 #			st.write("appended!")
 		big_area(area_lists)
 	elif place[:-3] in split_places:
-		st.write('3')
+		#st.write('3')
 		patternplace = place_original[:-3]
 		pattern = re.compile(f"^{re.escape(patternplace)}")
 		#st.write(pattern)
@@ -604,7 +604,7 @@ def get_place(place_str: str):
 #			st.write("appended!")
 		big_area(area_lists)
 	elif place[:-4] in split_places:
-		st.write('4')
+		#st.write('4')
 		patternplace = place_original[:-4]
 		pattern = re.compile(f"^{re.escape(patternplace)}")
 		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
@@ -616,7 +616,7 @@ def get_place(place_str: str):
 #			st.write("appended!")
 		big_area(area_lists)
 	elif place[:-5] in split_places:
-		st.write('5')
+		#st.write('5')
 		patternplace = place_original[:-5]
 		pattern = re.compile(f"^{re.escape(patternplace)}")
 		matching_files = [f for f in fs.ls("birds-data/checklistinator") if pattern.match(os.path.basename(f))]
@@ -628,7 +628,7 @@ def get_place(place_str: str):
 #			st.write("appended!")
 		big_area(area_lists)
 	elif place[:-2] in split_places:
-		st.write('2')
+		#st.write('2')
 		patternplace = place_original[:-2]
 		pattern = re.compile(f"^{re.escape(patternplace)}")
 		##st.write(pattern)
